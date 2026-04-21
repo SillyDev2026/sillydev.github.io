@@ -1,1 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Roblox Games</title>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">SillyDev2026</div>
+
+    <div>
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./projects.html">Projects</a>
+        <a href="./roblox.html">Roblox Games</a>
+        <a href="./links.html">Links</a>
+        <a href="./contact.html">Contact</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <h1>🎮 Roblox Games</h1>
+    <p>My Roblox creations with pagination system</p>
+
+    <!-- SETTINGS -->
+    <div class="card">
+        <label>Items per page (5 - 25): </label>
+        <input id="limitInput" type="number" value="6" min="5" max="25">
+        <button class="btn primary" onclick="applyLimit()">Apply</button>
+    </div>
+
+    <!-- GRID -->
+    <div id="grid" class="grid"></div>
+
+    <!-- PAGINATION -->
+    <div style="text-align:center; margin-top:30px;">
+        <button class="btn dark" onclick="prevPage()">⬅ Back</button>
+        <span id="pageInfo" style="margin:0 15px;"></span>
+        <button class="btn dark" onclick="nextPage()">Next ➡</button>
+    </div>
+
+</div>
+
+<footer>© 2026 SillyDev2026</footer>
+
+<script>
+/* ================= DATA ================= */
+const games = [
+    { title: "Game 1", desc: "First Roblox game", link: "#" },
+    { title: "Game 2", desc: "Second Roblox game", link: "#" },
+    { title: "Game 3", desc: "Third Roblox game", link: "#" },
+    { title: "Game 4", desc: "Fourth Roblox game", link: "#" },
+    { title: "Game 5", desc: "Fifth Roblox game", link: "#" },
+    { title: "Game 6", desc: "Sixth Roblox game", link: "#" },
+    { title: "Game 7", desc: "Seventh Roblox game", link: "#" },
+    { title: "Game 8", desc: "Eighth Roblox game", link: "#" },
+    { title: "Game 9", desc: "Ninth Roblox game", link: "#" },
+    { title: "Game 10", desc: "Tenth Roblox game", link: "#" }
+];
+
+/* ================= STATE ================= */
+let page = 1;
+let limit = 6;
+
+/* ================= RENDER ================= */
+function render() {
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
+
+    const start = (page - 1) * limit;
+    const end = start + limit;
+
+    const slice = games.slice(start, end);
+
+    slice.forEach(g => {
+        grid.innerHTML += `
+        <div class="card">
+            <h2>${g.title}</h2>
+            <p>${g.desc}</p>
+            <a class="btn primary" href="${g.link}" target="_blank">Play</a>
+        </div>`;
+    });
+
+    document.getElementById("pageInfo").innerText =
+        `Page ${page} / ${Math.ceil(games.length / limit)}`;
+}
+
+/* ================= PAGINATION ================= */
+function nextPage() {
+    if (page < Math.ceil(games.length / limit)) {
+        page++;
+        render();
+    }
+}
+
+function prevPage() {
+    if (page > 1) {
+        page--;
+        render();
+    }
+}
+
+/* ================= LIMIT CONTROL ================= */
+function applyLimit() {
+    const val = parseInt(document.getElementById("limitInput").value);
+
+    if (val >= 5 && val <= 25) {
+        limit = val;
+        page = 1;
+        render();
+    } else {
+        alert("Limit must be between 5 and 25");
+    }
+}
+
+/* INIT */
+render();
+</script>
+
+</body>
+</html>
