@@ -63,6 +63,7 @@
 
 <script>
 
+/* ================= DATA ================= */
 const data = {
     games: [
         { title: "Game Example 1", desc: "A Roblox game", link: "#" },
@@ -80,9 +81,13 @@ let page = 1;
 let limit = 6;
 let category = "games";
 
-/* ================= HELPERS ================= */
+/* ================= CORE ================= */
 function getItems() {
     return data[category] || [];
+}
+
+function getMaxPage(items) {
+    return Math.max(1, Math.ceil(items.length / limit));
 }
 
 /* ================= RENDER ================= */
@@ -93,6 +98,9 @@ function render() {
     if (!grid || !pageInfo) return;
 
     const items = getItems();
+    const maxPage = getMaxPage(items);
+
+    if (page > maxPage) page = maxPage;
 
     const start = (page - 1) * limit;
     const end = start + limit;
@@ -112,7 +120,7 @@ function render() {
         </div>`;
     });
 
-    pageInfo.innerText = `Page ${page} / ${Math.max(1, Math.ceil(items.length / limit))}`;
+    pageInfo.innerText = `Page ${page} / ${maxPage}`;
 }
 
 /* ================= ACTIONS ================= */
@@ -124,7 +132,9 @@ function changeCategory() {
 
 function nextPage() {
     const items = getItems();
-    if (page < Math.ceil(items.length / limit)) {
+    const max = getMaxPage(items);
+
+    if (page < max) {
         page++;
         render();
     }
@@ -138,18 +148,20 @@ function prevPage() {
 }
 
 function applyLimit() {
-    const val = parseInt(document.getElementById("limitInput").value);
+    const input = document.getElementById("limitInput");
+    const val = parseInt(input.value);
 
-    if (val >= 5 && val <= 25) {
-        limit = val;
-        page = 1;
-        render();
-    } else {
+    if (isNaN(val) || val < 5 || val > 25) {
         alert("Limit must be between 5 and 25");
+        return;
     }
+
+    limit = val;
+    page = 1;
+    render();
 }
 
-/* ================= EVENT BINDING (IMPORTANT FIX) ================= */
+/* ================= INIT ================= */
 window.onload = function () {
 
     document.getElementById("categorySelect").addEventListener("change", changeCategory);
