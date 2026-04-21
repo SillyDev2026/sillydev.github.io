@@ -29,10 +29,11 @@
     <h1>🎮 Roblox Hub</h1>
     <p>Select category and browse your creations</p>
 
+    <!-- SETTINGS -->
     <div class="card">
 
         <label>Category:</label>
-        <select id="categorySelect" onchange="changeCategory()">
+        <select id="categorySelect">
             <option value="games">Games</option>
             <option value="modules">Modules</option>
         </select>
@@ -41,16 +42,19 @@
 
         <label>Items per page (5 - 25):</label>
         <input id="limitInput" type="number" value="6" min="5" max="25">
-        <button class="btn primary" onclick="applyLimit()">Apply</button>
+
+        <button class="btn primary" id="applyBtn">Apply</button>
 
     </div>
 
+    <!-- GRID -->
     <div id="grid" class="grid"></div>
 
+    <!-- PAGINATION -->
     <div style="text-align:center; margin-top:30px;">
-        <button class="btn dark" onclick="prevPage()">⬅ Back</button>
+        <button class="btn dark" id="backBtn">⬅ Back</button>
         <span id="pageInfo" style="margin:0 15px;"></span>
-        <button class="btn dark" onclick="nextPage()">Next ➡</button>
+        <button class="btn dark" id="nextBtn">Next ➡</button>
     </div>
 
 </div>
@@ -71,24 +75,31 @@ const data = {
     ]
 };
 
+/* ================= STATE ================= */
 let page = 1;
 let limit = 6;
 let category = "games";
 
-function getCurrentData() {
-    return data[category];
+/* ================= HELPERS ================= */
+function getItems() {
+    return data[category] || [];
 }
 
+/* ================= RENDER ================= */
 function render() {
     const grid = document.getElementById("grid");
-    grid.innerHTML = "";
+    const pageInfo = document.getElementById("pageInfo");
 
-    const items = getCurrentData();
+    if (!grid || !pageInfo) return;
+
+    const items = getItems();
 
     const start = (page - 1) * limit;
     const end = start + limit;
 
     const slice = items.slice(start, end);
+
+    grid.innerHTML = "";
 
     slice.forEach(item => {
         grid.innerHTML += `
@@ -101,10 +112,10 @@ function render() {
         </div>`;
     });
 
-    document.getElementById("pageInfo").innerText =
-        `Page ${page} / ${Math.ceil(items.length / limit)}`;
+    pageInfo.innerText = `Page ${page} / ${Math.max(1, Math.ceil(items.length / limit))}`;
 }
 
+/* ================= ACTIONS ================= */
 function changeCategory() {
     category = document.getElementById("categorySelect").value;
     page = 1;
@@ -112,7 +123,7 @@ function changeCategory() {
 }
 
 function nextPage() {
-    const items = getCurrentData();
+    const items = getItems();
     if (page < Math.ceil(items.length / limit)) {
         page++;
         render();
@@ -138,7 +149,16 @@ function applyLimit() {
     }
 }
 
-render();
+/* ================= EVENT BINDING (IMPORTANT FIX) ================= */
+window.onload = function () {
+
+    document.getElementById("categorySelect").addEventListener("change", changeCategory);
+    document.getElementById("applyBtn").addEventListener("click", applyLimit);
+    document.getElementById("nextBtn").addEventListener("click", nextPage);
+    document.getElementById("backBtn").addEventListener("click", prevPage);
+
+    render();
+};
 
 </script>
 
