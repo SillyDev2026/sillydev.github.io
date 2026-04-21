@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Roblox Games/Roblox Modules/Roblox Classes</title>
+<title>Roblox Hub</title>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
@@ -19,7 +18,7 @@
         <a href="./index.html">Home</a>
         <a href="./about.html">About</a>
         <a href="./projects.html">Projects</a>
-        <a href="./roblox.html">Roblox Games</a>
+        <a href="./roblox.html">Roblox Hub</a>
         <a href="./links.html">Links</a>
         <a href="./contact.html">Contact</a>
     </div>
@@ -27,20 +26,27 @@
 
 <div class="container">
 
-    <h1>🎮 Roblox Games/Roblox Modules/Roblox Modules</h1>
-    <p>My Roblox creations with pagination system</p>
+    <h1>🎮 Roblox Hub</h1>
+    <p>Select category and browse your creations</p>
 
-    <!-- SETTINGS -->
     <div class="card">
-        <label>Items per page (5 - 25): </label>
+
+        <label>Category:</label>
+        <select id="categorySelect" onchange="changeCategory()">
+            <option value="games">Games</option>
+            <option value="modules">Modules</option>
+        </select>
+
+        <br><br>
+
+        <label>Items per page (5 - 25):</label>
         <input id="limitInput" type="number" value="6" min="5" max="25">
         <button class="btn primary" onclick="applyLimit()">Apply</button>
+
     </div>
 
-    <!-- GRID -->
     <div id="grid" class="grid"></div>
 
-    <!-- PAGINATION -->
     <div style="text-align:center; margin-top:30px;">
         <button class="btn dark" onclick="prevPage()">⬅ Back</button>
         <span id="pageInfo" style="margin:0 15px;"></span>
@@ -52,42 +58,62 @@
 <footer>© 2026 SillyDev2026</footer>
 
 <script>
-/* ================= DATA ================= */
-const games = [
-    { title: "Bnum", desc: "BnumModule", link: "https://create.roblox.com/store/asset/133072011264214/Bnum" },
-    { title: "NetStream", desc: "a Simple Network package that lets u send less packets on events", link: "https://create.roblox.com/store/asset/110479081610454/NetworkHandler" },
-];
 
-/* ================= STATE ================= */
+const data = {
+    games: [
+        { title: "Game Example 1", desc: "A Roblox game", link: "#" },
+        { title: "Game Example 2", desc: "Another Roblox game", link: "#" }
+    ],
+
+    modules: [
+        { title: "Bnum", desc: "BnumModule", link: "https://create.roblox.com/store/asset/133072011264214/Bnum" },
+        { title: "NetStream", desc: "Network handler system", link: "https://create.roblox.com/store/asset/110479081610454/NetworkHandler" }
+    ]
+};
+
 let page = 1;
 let limit = 6;
+let category = "games";
 
-/* ================= RENDER ================= */
+function getCurrentData() {
+    return data[category];
+}
+
 function render() {
     const grid = document.getElementById("grid");
     grid.innerHTML = "";
 
+    const items = getCurrentData();
+
     const start = (page - 1) * limit;
     const end = start + limit;
 
-    const slice = games.slice(start, end);
+    const slice = items.slice(start, end);
 
-    slice.forEach(g => {
+    slice.forEach(item => {
         grid.innerHTML += `
         <div class="card">
-            <h2>${g.title}</h2>
-            <p>${g.desc}</p>
-            <a class="btn primary" href="${g.link}" target="_blank" rel="noopener noreferrer"> Play</a>
+            <h2>${item.title}</h2>
+            <p>${item.desc}</p>
+            <a class="btn primary" href="${item.link}" target="_blank" rel="noopener noreferrer">
+                Open
+            </a>
         </div>`;
     });
 
     document.getElementById("pageInfo").innerText =
-        `Page ${page} / ${Math.ceil(games.length / limit)}`;
+        `Page ${page} / ${Math.ceil(items.length / limit)}`;
 }
 
-/* ================= PAGINATION ================= */
+function changeCategory() {
+    category = document.getElementById("categorySelect").value;
+    page = 1;
+    render();
+}
+
 function nextPage() {
-    if (page < Math.ceil(games.length / limit)) {
+    const items = getCurrentData();
+    if (page < Math.ceil(items.length / limit)) {
         page++;
         render();
     }
@@ -100,7 +126,6 @@ function prevPage() {
     }
 }
 
-/* ================= LIMIT CONTROL ================= */
 function applyLimit() {
     const val = parseInt(document.getElementById("limitInput").value);
 
@@ -113,8 +138,8 @@ function applyLimit() {
     }
 }
 
-/* INIT */
 render();
+
 </script>
 
 </body>
