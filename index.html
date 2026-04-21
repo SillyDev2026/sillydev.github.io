@@ -13,21 +13,16 @@
 <meta property="og:url" content="https://sillydev2026.github.io">
 <meta property="og:type" content="website">
 
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="SillyDev2026 Portfolio">
-<meta name="twitter:description" content="Clean developer website built with HTML & CSS">
-<meta name="twitter:image" content="https://sillydev2026.github.io/images/preview.png">
-
 <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-<nav>
+<nav class="glass-nav">
     <div class="logo">SillyDev2026</div>
 
-    <div>
+    <div class="nav-links">
         <a href="./index.html">Home</a>
         <a href="./about.html">About</a>
         <a href="./projects.html">Projects</a>
@@ -39,33 +34,37 @@
 
 <div class="container">
 
-    <div class="hero">
-        <h1>SillyDev's Portfolio</h1>
-        <p>Clean static site built with HTML + CSS</p>
+    <section class="hero glass">
 
-        <a class="btn primary" href="./projects.html">View Projects</a>
-        <a class="btn dark" href="./about.html">About Me</a>
-        <a class="btn primary" href="./roblox.html">Roblox Games</a>
-    </div>
+        <h1 class="title">SillyDev's Portfolio</h1>
+        <p class="subtitle">Clean modern developer site with Roblox & coding projects</p>
 
-    <div class="grid">
+        <div class="buttons">
+            <a class="btn glow" href="./projects.html">View Projects</a>
+            <a class="btn" href="./about.html">About Me</a>
+            <a class="btn glow" href="./roblox.html">Roblox Games</a>
+        </div>
 
-        <div class="card">
+    </section>
+
+    <section class="grid">
+
+        <div class="card glass hover">
             <h2>Modern Design</h2>
-            <p>Clean responsive layout</p>
+            <p>Glass UI with smooth animations</p>
         </div>
 
-        <div class="card">
-            <h2>Fast</h2>
-            <p>No backend needed</p>
+        <div class="card glass hover">
+            <h2>Fast Performance</h2>
+            <p>No backend, fully static</p>
         </div>
 
-        <div class="card">
+        <div class="card glass hover">
             <h2>GitHub Pages Ready</h2>
-            <p>Deploy free instantly</p>
+            <p>Instant free deployment</p>
         </div>
 
-    </div>
+    </section>
 
 </div>
 
