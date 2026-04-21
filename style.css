@@ -188,6 +188,7 @@ select option {
     overflow: hidden;
 
     pointer-events: auto;
+    z-index: 1;
 }
 
 .card::before {
@@ -197,6 +198,8 @@ select option {
     background: radial-gradient(circle at top left, rgba(56,189,248,0.15), transparent 60%);
     opacity: 0;
     transition: 0.3s ease;
+    pointer-events: none;
+    z-index: 0
 }
 
 .card:hover {
