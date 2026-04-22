@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Bnum Calc | SillyDev2026</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+body{
+    font-size:16px;
+    line-height:1.6;
+}
+
+.logo{
+    font-size:18px;
+    font-weight:600;
+}
+
+.nav-links a{
+    font-size:14px;
+}
+
+.hero h1{
+    font-size:42px;
+    line-height:1.1;
+    margin-bottom:10px;
+}
+
+.hero p{
+    font-size:16px;
+    opacity:.85;
+}
+
+.badge{
+    font-size:12px;
+}
+
+.btn{
+    font-size:14px;
+    cursor:pointer;
+    border:none;
+}
+
+input, select{
+    width:100%;
+    padding:12px;
+    margin-top:12px;
+    border:none;
+    border-radius:12px;
+    font-size:16px;
+}
+
+.result{
+    margin-top:22px;
+    font-size:28px;
+    font-weight:700;
+    word-break:break-word;
+}
+
+.subtext{
+    margin-top:8px;
+    opacity:.75;
+    font-size:14px;
+    word-break:break-word;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<div class="logo">SillyDev2026</div>
+
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="projects.html">Projects</a>
+<a href="contact.html">Contact</a>
+</div>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+<div class="card hero-card">
+
+<span class="badge">Calculator</span>
+
+<h1>Bnum Calc</h1>
+
+<p>
+Big number calculator using your Bnum system.<br>
+Examples: 1e6, 5e12, 999999999
+</p>
+
+<input id="num1" placeholder="First Number">
+
+<input id="num2" placeholder="Second Number">
+
+<select id="op">
+<option value="add">Add (+)</option>
+<option value="sub">Subtract (-)</option>
+<option value="mul">Multiply (×)</option>
+<option value="div">Divide (÷)</option>
+<option value="pow">Power (^)</option>
+<option value="log">Log Base</option>
+</select>
+
+<div style="margin-top:18px;">
+<button class="btn primary" onclick="calculate()">Calculate</button>
+</div>
+
+<div class="result" id="result">0</div>
+<div class="subtext" id="raw">Ready</div>
+
+</div>
+</section>
+
+</main>
+
+<script>
+class Bnum{
+constructor(man,exp=0){
+this.man=parseFloat(man);
+this.exp=parseInt(exp);
+this.normalize();
+}
+
+normalize(){
+if(this.man===0){
+this.exp=0;
+return this;
+}
+let man=Math.abs(this.man);
+let shift=Math.floor(Math.log10(man));
+this.man=(this.man>0?1:-1)*(man/(10**shift));
+this.exp+=shift;
+return this;
+}
+
+static new(man,exp){
+return new Bnum(man,exp);
+}
+
+static fromNumber(val){
+if(val===0)return new Bnum(0,0);
+let sign=val<0?-1:1;
+val=Math.abs(val);
+let exp=Math.floor(Math.log10(val));
+let man=val/(10**exp);
+return new Bnum(sign*man,exp);
+}
+
+static fromString(val){
+val=String(val).trim().toLowerCase();
+
+if(val==="0"||val==="0e0"){
+return new Bnum(0,0);
+}
+
+if(!val.includes("e")){
+return this.fromNumber(parseFloat(val));
+}
+
+let parts=val.split("e");
+let base=parseFloat(parts[0]);
+let exp=parseInt(parts[1]);
+
+let sign=base<0?-1:1;
+let absBase=Math.abs(base);
+
+let totalExp=Math.log10(absBase)+exp;
+let expFinal=Math.floor(totalExp);
+let man=sign*(absBase/(10**Math.floor(Math.log10(absBase))));
+
+return new Bnum(man,expFinal);
+}
+
+static convert(val){
+if(val instanceof Bnum)return val;
+if(typeof val==="number")return this.fromNumber(val);
+if(typeof val==="string")return this.fromString(val);
+return new Bnum(0,0);
+}
+
+static add(a,b){
+a=this.convert(a);
+b=this.convert(b);
+
+if(a.man===0)return b;
+if(b.man===0)return a;
+
+let man1,man2,exp;
+
+if(a.exp>b.exp){
+let diff=a.exp-b.exp;
+man1=a.man;
+man2=b.man/(10**diff);
+exp=a.exp;
+}else{
+let diff=b.exp-a.exp;
+man1=a.man/(10**diff);
+man2=b.man;
+exp=b.exp;
+}
+
+return new Bnum(man1+man2,exp);
+}
+
+static sub(a,b){
+a=this.convert(a);
+b=this.convert(b);
+return this.add(a,new Bnum(-b.man,b.exp));
+}
+
+static mul(a,b){
+a=this.convert(a);
+b=this.convert(b);
+
+if(a.man===0||b.man===0)return new Bnum(0,0);
+
+return new Bnum(a.man*b.man,a.exp+b.exp);
+}
+
+static recip(v){
+v=this.convert(v);
+return new Bnum(1/v.man,-v.exp);
+}
+
+static div(a,b){
+return this.mul(a,this.recip(b));
+}
+
+static log10(v){
+v=this.convert(v);
+
+if(v.man<=0)return new Bnum(0,0);
+
+let result=Math.log10(v.man)+v.exp;
+
+if(Math.abs(result)<10){
+return new Bnum(result,0);
+}
+
+let shift=Math.floor(Math.log10(Math.abs(result)));
+let man=result/(10**shift);
+
+return new Bnum(man,shift);
+}
+
+static log(a,b){
+return this.div(this.log10(a),this.log10(b));
+}
+
+static pow10(v){
+v=this.convert(v);
+
+if(v.man===0)return new Bnum(1,0);
+
+let realExp=v.man*(10**v.exp);
+let exp=Math.floor(realExp);
+let man=10**(realExp-exp);
+
+return new Bnum(man,exp);
+}
+
+static pow(a,b){
+a=this.convert(a);
+b=this.convert(b);
+
+let loga=this.log10(a);
+let power=this.mul(loga,b);
+
+return this.pow10(power);
+}
+
+static suffix_part(index){
+const first=["","U","D","T","Qd","Qn","Sx","Sp","Oc","No"];
+const second=["","De","Vt","Tg","qg","Qg","sg","Sg","Og","Ng"];
+const third=["","Ce","Du","Tr","Qa","Qi","Se","Si","Ot","Ni"];
+
+let hund=Math.floor(index/100);
+index=index%100;
+let ten=Math.floor(index/10);
+let one=index%10;
+
+return first[one]+second[ten]+third[hund];
+}
+
+static format(v){
+v=this.convert(v);
+
+let man=v.man;
+let exp=v.exp;
+
+if(man===0)return "0";
+
+let sign=man<0?"-":"";
+man=Math.abs(man);
+
+let first=["","k","m","b"];
+
+if(exp<3000){
+let lf=exp%3;
+man=+(man*(10**lf)).toFixed(2);
+let index=Math.floor(exp/3);
+
+if(index<first.length){
+return sign+man+first[index];
+}
+
+return sign+man+this.suffix_part(index-1);
+}
+
+return sign+"E"+this.format(this.fromNumber(exp));
+}
+
+toString(){
+return this.man+"e"+this.exp;
+}
+}
+
+function calculate(){
+try{
+let a=document.getElementById("num1").value||"0";
+let b=document.getElementById("num2").value||"0";
+let op=document.getElementById("op").value;
+
+let result;
+
+if(op==="add")result=Bnum.add(a,b);
+if(op==="sub")result=Bnum.sub(a,b);
+if(op==="mul")result=Bnum.mul(a,b);
+if(op==="div")result=Bnum.div(a,b);
+if(op==="pow")result=Bnum.pow(a,b);
+if(op==="log")result=Bnum.log(a,b);
+
+document.getElementById("result").innerText=Bnum.format(result);
+document.getElementById("raw").innerText=result.toString();
+
+}catch(err){
+document.getElementById("result").innerText="Error";
+document.getElementById("raw").innerText=err.message;
+}
+}
+</script>
+
+</body>
+</html>
