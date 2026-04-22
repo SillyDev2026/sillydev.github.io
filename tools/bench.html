@@ -23,15 +23,14 @@ h1 {
     color:#38bdf8;
 }
 
-.codebox {
+.editor {
     background: rgba(0,0,0,0.35);
     border:1px solid rgba(255,255,255,0.08);
     border-radius:12px;
     padding:16px;
     min-height:260px;
-    white-space:pre;
     outline:none;
-    overflow:auto;
+    white-space:pre;
 }
 
 button {
@@ -60,9 +59,9 @@ pre {
 
 <div class="container">
 
-<h1>⚡ Lua Bench Tool</h1>
+<h1>⚡ Lua Bench Tool (Runtime Engine)</h1>
 
-<div id="editor" class="codebox" contenteditable="true">
+<div id="editor" class="editor" contenteditable="true">
 function floor(val)
     return val - (val % val)
 end
@@ -93,61 +92,109 @@ function clearOutput(){
     document.getElementById("output").textContent = "";
 }
 
-const Lua = {
-    functions: Object.create(null)
-};
+/* ================= LUA ENV ================= */
 
-function register(name, fn){
-    Lua.functions[name] = fn;
+function createEnv(parent = null){
+    return {
+        vars: Object.create(parent ? parent.vars : null),
+        funcs: Object.create(parent ? parent.funcs : null)
+    };
 }
 
-function benchFunction(label, func, iterations = 100000){
+/* ================= FUNCTION PARSER ================= */
 
-    for(let i=0;i<1000;i++) func();
-
-    const start = performance.now();
-
-    for(let i=0;i<iterations;i++){
-        func();
-    }
-
-    const sec = (performance.now() - start) / 1000;
-
-    log(`${label} took ${sec.toFixed(6)}s`);
-    log(`${label} avg/op: ${((sec / iterations) * 1e6).toFixed(6)} µs`);
-}
-
-function parseLua(code){
-
-    Lua.functions = Object.create(null);
+function parseFunctions(code, env){
 
     const fnRegex = /function\s+(\w+)\s*\((.*?)\)\s*([\s\S]*?)end/g;
 
     let m;
 
-    while((m = fnRegex.exec(code)) !== null){
+    while ((m = fnRegex.exec(code)) !== null) {
 
         const name = m[1];
-        const params = m[2];
+        const params = m[2].split(",").map(x => x.trim()).filter(Boolean);
         const body = m[3];
 
-        const fn = new Function(params, body);
+        env.funcs[name] = (...args) => {
 
-        register(name, fn);
+            const child = createEnv(env);
+
+            params.forEach((p, i) => {
+                child.vars[p] = args[i];
+            });
+
+            return execute(body, child);
+        };
     }
-
-    const benchRegex = /benchFunction\("(.+?)",\s*function\(\)\s*([\s\S]*?)end\s*,\s*(\d+)\)/;
-
-    const b = code.match(benchRegex);
-
-    if(!b) return null;
-
-    return {
-        label: b[1],
-        body: b[2],
-        iterations: Number(b[3])
-    };
 }
+
+/* ================= EXPRESSION EVALUATOR ================= */
+
+function evalExpr(expr, env){
+    return new Function("vars", "funcs", `
+        with(vars){
+            with(funcs){
+                return (${expr});
+            }
+        }
+    `)(env.vars, env.funcs);
+}
+
+/* ================= EXECUTOR ================= */
+
+function execute(code, env){
+
+    const lines = code.split("\n").map(l => l.trim()).filter(Boolean);
+
+    let i = 0;
+
+    while (i < lines.length) {
+
+        const line = lines[i];
+
+        /* local */
+        if (line.startsWith("local ")) {
+
+            const m = line.match(/local\s+(\w+)\s*=\s*(.+)/);
+            env.vars[m[1]] = evalExpr(m[2], env);
+        }
+
+        /* function call */
+        else if (line.includes("(") && line.includes(")")) {
+
+            const name = line.split("(")[0].trim();
+            const argsRaw = line.match(/\((.*)\)/)[1];
+
+            const args = argsRaw
+                .split(",")
+                .map(a => evalExpr(a.trim(), env));
+
+            if (env.funcs[name]) {
+                env.funcs[name](...args);
+            }
+        }
+
+        i++;
+    }
+}
+
+/* ================= BENCH ================= */
+
+function benchFunction(label, fn, iterations){
+
+    for (let i = 0; i < 1000; i++) fn();
+
+    const start = performance.now();
+
+    for (let i = 0; i < iterations; i++) fn();
+
+    const sec = (performance.now() - start) / 1000;
+
+    log(label + " took " + sec.toFixed(6) + "s");
+    log(label + " avg/op: " + ((sec / iterations) * 1e6).toFixed(6) + " µs");
+}
+
+/* ================= RUNNER ================= */
 
 function runBench(){
 
@@ -155,32 +202,27 @@ function runBench(){
 
     const code = document.getElementById("editor").innerText;
 
-    try {
+    const env = createEnv();
 
-        const parsed = parseLua(code);
+    env.funcs.benchFunction = benchFunction;
 
-        if(!parsed){
-            log("No benchFunction found");
-            return;
-        }
+    parseFunctions(code, env);
 
-        const fn = new Function("Lua", `
-            return function(){
+    const benchMatch =
+        code.match(/benchFunction\("(.+?)",\s*function\(\)\s*([\s\S]*?)end\s*,\s*(\d+)\)/);
 
-                const f = Lua.functions;
-
-                ${parsed.body.replace(/\b(\w+)\b/g, (m) => {
-                    return Lua.functions[m] ? `f["${m}"]` : m;
-                })}
-
-            }
-        `)(Lua);
-
-        benchFunction(parsed.label, fn, parsed.iterations);
-
-    } catch(e){
-        log("Error: " + e.message);
+    if (!benchMatch){
+        log("No benchFunction found");
+        return;
     }
+
+    const label = benchMatch[1];
+    const body = benchMatch[2];
+    const iterations = Number(benchMatch[3]);
+
+    const fn = () => execute(body, env);
+
+    benchFunction(label, fn, iterations);
 }
 
 </script>
