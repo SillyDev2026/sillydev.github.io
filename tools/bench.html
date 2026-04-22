@@ -2,48 +2,67 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Bench Lua Code</title>
+<title>Lua Bench Tool</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 
 <style>
 body {
-    font-size: 16px;
-    line-height: 1.6;
+    margin:0;
     background:#0b1220;
     color:white;
     font-family: monospace;
 }
 
+/* layout */
 .container {
-    width: min(900px, 92%);
-    margin: auto;
-    padding: 40px 0;
+    width:min(1000px,92%);
+    margin:auto;
+    padding:40px 0;
 }
 
-textarea {
-    width:100%;
-    height:260px;
-    background:#111827;
-    color:white;
+h1 {
+    font-size:28px;
+    margin-bottom:10px;
+    color:#38bdf8;
+}
+
+.code-wrap {
+    position: relative;
+    margin-top: 20px;
+}
+
+.editor {
+    background: rgba(0,0,0,0.35);
+    border:1px solid rgba(255,255,255,0.08);
     border-radius:12px;
-    padding:12px;
+    padding:16px;
+    min-height:260px;
+    outline:none;
+    white-space:pre;
+    overflow:auto;
 }
 
-button {
-    margin-top:10px;
+/* buttons */
+.btn {
+    margin-top:12px;
     padding:10px 14px;
     border:none;
     border-radius:10px;
     cursor:pointer;
+    font-weight:700;
 }
 
-.primary { background:#38bdf8; }
-.dark { background:#333; color:white; }
+.primary { background:#38bdf8; color:#0b1220; }
+.dark { background:#222; color:white; }
 
 pre {
     margin-top:15px;
     background:#000;
     padding:12px;
     border-radius:12px;
+    min-height:120px;
 }
 </style>
 </head>
@@ -52,9 +71,13 @@ pre {
 
 <div class="container">
 
-<h1>Lua Bench Simulator</h1>
+<h1>⚡ Lua Bench Tool</h1>
 
-<textarea id="code">
+<p>Lua-style editor + benchmark runtime</p>
+
+<div class="code-wrap">
+
+<pre id="editor" class="editor" contenteditable="true">
 function floor(val)
     return val - (val % val)
 end
@@ -62,20 +85,17 @@ end
 benchFunction("Test", function()
     floor(10)
 end, 100000)
-</textarea>
+</pre>
 
-<br>
-
-<button class="primary" onclick="runBench()">Run</button>
-<button class="dark" onclick="clearOutput()">Clear</button>
+<button class="btn primary" onclick="runBench()">Run Bench</button>
+<button class="btn dark" onclick="clearOutput()">Clear</button>
 
 <pre id="output"></pre>
 
 </div>
+</div>
 
 <script>
-
-/* ================= OUTPUT ================= */
 
 function log(msg){
     document.getElementById("output").textContent += msg + "\n";
@@ -85,18 +105,13 @@ function clearOutput(){
     document.getElementById("output").textContent = "";
 }
 
-/* ================= LUA STORAGE ================= */
-
 const Lua = {
     functions: {}
 };
 
-/* register function */
 function register(name, fn){
     Lua.functions[name] = fn;
 }
-
-/* ================= BENCH ================= */
 
 function benchFunction(label, func, iterations=1e5){
 
@@ -108,25 +123,16 @@ function benchFunction(label, func, iterations=1e5){
         func();
     }
 
-    const end = performance.now();
-
-    const seconds = (end - start)/1000;
+    const seconds = (performance.now() - start)/1000;
 
     log(label + " took " + seconds.toFixed(6) + "s");
     log(label + " avg/op: " + ((seconds/iterations)*1e6).toFixed(6) + " µs");
 }
 
-/* ================= LUA PARSER (SAFE SIMPLE) ================= */
-
-function runBench(){
-
-    clearOutput();
-
-    const code = document.getElementById("code").value;
+function parseLua(code){
 
     Lua.functions = {};
 
-    /* 1. parse functions */
     const funcRegex = /function\s+(\w+)\s*\((.*?)\)\s*([\s\S]*?)end/g;
 
     let match;
@@ -139,41 +145,58 @@ function runBench(){
 
         const jsBody = body
             .replace(/local\s+/g,"let ")
-            .replace(/%/g," % ")
-            .replace(/then/g,"")
-            .replace(/end/g,"");
+            .replace(/%/g," % ");
 
         const fn = new Function(params, jsBody);
 
         register(name, fn);
     }
 
-    /* 2. replace Lua calls inside bench */
-    const benchRegex = /benchFunction\("(.+?)",\s*function\(\)\s*([\s\S]*?)end\s*,\s*(\d+)\)/;
+    // bench parser
+    const benchRegex =
+    /benchFunction\("(.+?)",\s*function\(\)\s*([\s\S]*?)end\s*,\s*(\d+)\)/;
 
     const b = code.match(benchRegex);
 
-    if(!b){
-        log("No benchFunction found");
-        return;
-    }
+    if(!b) return null;
 
-    const label = b[1];
-    let body = b[2];
-    const iterations = parseInt(b[3]);
+    return {
+        label: b[1],
+        body: b[2],
+        iterations: parseInt(b[3])
+    };
+}
 
-    /* replace Lua calls */
-    const funcNames = Object.keys(Lua.functions);
+function runBench(){
 
-    const benchFn = new Function(`
-        return function(){
-            ${body.replace(/\b(\w+)\b/g, (m)=>{
-                return Lua.functions[m] ? `Lua.functions["${m}"]` : m;
-            })}
+    clearOutput();
+
+    const code = document.getElementById("editor").innerText;
+
+    try {
+
+        const parsed = parseLua(code);
+
+        if(!parsed){
+            log("No benchFunction found");
+            return;
         }
-    `)();
 
-    benchFunction(label, benchFn, iterations);
+        const fn = new Function(`
+            return function(){
+                ${parsed.body.replace(/\b(\w+)\b/g, (m)=>{
+                    return Lua.functions[m]
+                        ? `Lua.functions["${m}"]()`
+                        : m;
+                })}
+            }
+        `)();
+
+        benchFunction(parsed.label, fn, parsed.iterations);
+
+    } catch(e){
+        log("Error: " + e.message);
+    }
 }
 
 </script>
