@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <title>Lua Bench Tool</title>
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
-
 <style>
 body {
     margin:0;
@@ -15,7 +12,6 @@ body {
     font-family: monospace;
 }
 
-/* layout */
 .container {
     width:min(1000px,92%);
     margin:auto;
@@ -24,28 +20,21 @@ body {
 
 h1 {
     font-size:28px;
-    margin-bottom:10px;
     color:#38bdf8;
 }
 
-.code-wrap {
-    position: relative;
-    margin-top: 20px;
-}
-
-.editor {
+.codebox {
     background: rgba(0,0,0,0.35);
     border:1px solid rgba(255,255,255,0.08);
     border-radius:12px;
     padding:16px;
     min-height:260px;
-    outline:none;
     white-space:pre;
+    outline:none;
     overflow:auto;
 }
 
-/* buttons */
-.btn {
+button {
     margin-top:12px;
     padding:10px 14px;
     border:none;
@@ -71,13 +60,9 @@ pre {
 
 <div class="container">
 
-<h1>⚡ Lua Bench Tool</h1>
+<h1>⚡ Lua Bench Tool (Rebuilt)</h1>
 
-<p>Lua-style editor + benchmark runtime</p>
-
-<div class="code-wrap">
-
-<pre id="editor" class="editor" contenteditable="true">
+<div id="editor" class="codebox" contenteditable="true">
 function floor(val)
     return val - (val % val)
 end
@@ -85,17 +70,18 @@ end
 benchFunction("Test", function()
     floor(10)
 end, 100000)
-</pre>
+</div>
 
-<button class="btn primary" onclick="runBench()">Run Bench</button>
-<button class="btn dark" onclick="clearOutput()">Clear</button>
+<button class="primary" onclick="runBench()">Run Bench</button>
+<button class="dark" onclick="clearOutput()">Clear</button>
 
 <pre id="output"></pre>
 
 </div>
-</div>
 
 <script>
+
+/* ================= OUTPUT ================= */
 
 function log(msg){
     document.getElementById("output").textContent += msg + "\n";
@@ -105,15 +91,19 @@ function clearOutput(){
     document.getElementById("output").textContent = "";
 }
 
+/* ================= LUA ENV ================= */
+
 const Lua = {
-    functions: {}
+    functions: Object.create(null)
 };
 
 function register(name, fn){
     Lua.functions[name] = fn;
 }
 
-function benchFunction(label, func, iterations=1e5){
+/* ================= BENCH ENGINE ================= */
+
+function benchFunction(label, func, iterations = 100000){
 
     for(let i=0;i<1000;i++) func();
 
@@ -123,38 +113,42 @@ function benchFunction(label, func, iterations=1e5){
         func();
     }
 
-    const seconds = (performance.now() - start)/1000;
+    const sec = (performance.now() - start) / 1000;
 
-    log(label + " took " + seconds.toFixed(6) + "s");
-    log(label + " avg/op: " + ((seconds/iterations)*1e6).toFixed(6) + " µs");
+    log(label + " took " + sec.toFixed(6) + "s");
+    log(label + " avg/op: " + ((sec / iterations) * 1e6).toFixed(6) + " µs");
 }
+
+/* ================= LUA PARSER ================= */
 
 function parseLua(code){
 
     Lua.functions = {};
 
-    const funcRegex = /function\s+(\w+)\s*\((.*?)\)\s*([\s\S]*?)end/g;
+    /* parse function declarations */
+    const fnRegex =
+        /function\s+(\w+)\s*\((.*?)\)\s*([\s\S]*?)end/g;
 
-    let match;
+    let m;
 
-    while((match = funcRegex.exec(code)) !== null){
+    while((m = fnRegex.exec(code)) !== null){
 
-        const name = match[1];
-        const params = match[2];
-        const body = match[3];
+        const name = m[1];
+        const params = m[2];
+        const body = m[3];
 
         const jsBody = body
-            .replace(/local\s+/g,"let ")
-            .replace(/%/g," % ");
+            .replace(/local\s+/g, "")
+            .replace(/--.*$/gm, "");
 
         const fn = new Function(params, jsBody);
 
         register(name, fn);
     }
 
-    // bench parser
+    /* extract bench */
     const benchRegex =
-    /benchFunction\("(.+?)",\s*function\(\)\s*([\s\S]*?)end\s*,\s*(\d+)\)/;
+        /benchFunction\("(.+?)",\s*function\(\)\s*([\s\S]*?)end\s*,\s*(\d+)\)/;
 
     const b = code.match(benchRegex);
 
@@ -163,9 +157,11 @@ function parseLua(code){
     return {
         label: b[1],
         body: b[2],
-        iterations: parseInt(b[3])
+        iterations: Number(b[3])
     };
 }
+
+/* ================= EXECUTION ================= */
 
 function runBench(){
 
@@ -182,15 +178,15 @@ function runBench(){
             return;
         }
 
-        const fn = new Function(`
+        const fn = new Function("Lua", `
             return function(){
-                ${parsed.body.replace(/\b(\w+)\b/g, (m)=>{
-                    return Lua.functions[m]
-                        ? `Lua.functions["${m}"]()`
-                        : m;
-                })}
+
+                const floor = Lua.functions.floor;
+
+                ${parsed.body}
+
             }
-        `)();
+        `)(Lua);
 
         benchFunction(parsed.label, fn, parsed.iterations);
 
