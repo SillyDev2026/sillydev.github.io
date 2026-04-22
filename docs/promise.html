@@ -1,53 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Promise Documentation</title>
+<title>Promise | Documentation</title>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="../style.css">
 
 <style>
-/* Keep it simple + consistent with your site */
-
-.section {
-    margin-bottom: 35px;
+.section-header {
+    margin-top: 40px;
+    margin-bottom: 15px;
 }
 
-.badge {
+.section-header h2 {
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+
+.section-header p {
+    opacity: 0.7;
+}
+
+.tag {
     display: inline-block;
     padding: 4px 10px;
     border-radius: 999px;
     font-size: 12px;
+    margin-right: 6px;
     background: rgba(255,255,255,0.08);
-    margin-bottom: 10px;
 }
 
-/* Typography scaled to match your other pages */
-h1 {
-    font-size: 32px;
-    margin-bottom: 10px;
+hr.soft {
+    border: none;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    margin: 30px 0;
 }
 
-h2 {
-    font-size: 22px;
-    margin-bottom: 10px;
-    margin-top: 25px;
-}
-
-h3 {
-    font-size: 16px;
-    margin-top: 18px;
-}
-
-p, li {
-    font-size: 14px;
-    opacity: 0.9;
-    line-height: 1.6;
-}
-
-/* Code blocks */
 pre {
     background: rgba(0,0,0,0.35);
     padding: 12px;
@@ -55,14 +46,7 @@ pre {
     overflow-x: auto;
     font-size: 13px;
     line-height: 1.5;
-    margin-top: 10px;
 }
-
-/* Lists */
-ul {
-    padding-left: 18px;
-}
-
 </style>
 
 </head>
@@ -72,96 +56,147 @@ ul {
 <nav>
     <div class="logo">SillyDev2026</div>
 
-    <div>
-        <a href="index.html">Home</a>
-        <a href="projects.html">Projects</a>
-        <a href="roblox-modules.html">Modules</a>
-        <a href="links.html">Links</a>
-        <a href="contact.html">Contact</a>
+    <div class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../roblox-modules.html">Modules</a>
+        <a href="../links.html">Links</a>
+        <a href="../contact.html">Contact</a>
     </div>
 </nav>
 
-<div class="container">
+<main class="container">
 
-    <!-- HEADER -->
-    <div class="section">
-        <span class="badge">Roblox Module</span>
-        <h1>Promise Documentation</h1>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="card hero-card">
+
+            <span class="badge">Promise Module</span>
+
+            <h1>Async Workflow System</h1>
+
+            <p>
+                A powerful Luau promise implementation for Roblox featuring chaining,
+                retries, event handling, and async utilities.
+            </p>
+
+            <div class="hero-buttons">
+                <a class="btn primary"
+                   href="https://create.roblox.com/store/asset/114214627038854/Promise"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                   Get Module
+                </a>
+
+                <a class="btn dark"
+                   href="../roblox-modules.html">
+                   Back to Modules
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section class="section-header">
+        <h2>Overview</h2>
+        <p>Core behavior and system design</p>
+    </section>
+
+    <section class="card">
         <p>
-            A Lua (Luau) async system for Roblox featuring chaining, retries,
-            event handling, and async utilities.
+            Promise is an asynchronous control flow system designed for Roblox.
+            It allows structured handling of async tasks without callback hell.
         </p>
-    </div>
 
-    <!-- INSTALL -->
-    <div class="section">
-        <h2>Installation</h2>
-        <pre>local Promise = require(path.to.Promise)</pre>
-    </div>
+        <div style="margin-top:15px;">
+            <span class="tag">Async</span>
+            <span class="tag">Chaining</span>
+            <span class="tag">Reliability</span>
+        </div>
+    </section>
 
-    <!-- BASIC -->
-    <div class="section">
+    <hr class="soft">
+
+    <!-- BASIC USAGE -->
+    <section class="section-header">
         <h2>Basic Usage</h2>
-        <pre>
-local Promise = require(PromiseModule)
+    </section>
 
-Promise.new(function(resolve, reject)
+    <section class="card">
+<pre>
+local Promise = require(Promise)
+
+Promise.new(function(resolve)
     task.wait(1)
     resolve("Hello World")
 end):andThen(function(result)
     print(result)
 end)
-        </pre>
-    </div>
+</pre>
+    </section>
 
     <!-- CHAINING -->
-    <div class="section">
+    <section class="section-header">
         <h2>Chaining</h2>
-        <pre>
+    </section>
+
+    <section class="card">
+<pre>
 Promise.new(function(resolve)
     resolve(10)
 end)
-:andThen(function(value)
-    return value * 2
+:andThen(function(v)
+    return v * 2
 end)
-:andThen(function(value)
-    print(value) -- 20
+:andThen(function(v)
+    print(v) -- 20
 end)
-        </pre>
-    </div>
+</pre>
+    </section>
 
     <!-- ERROR -->
-    <div class="section">
+    <section class="section-header">
         <h2>Error Handling</h2>
-        <pre>
+    </section>
+
+    <section class="card">
+<pre>
 Promise.new(function(_, reject)
     reject("Something went wrong")
 end)
 :catch(function(err)
     warn(err)
 end)
-        </pre>
-    </div>
+</pre>
+    </section>
 
     <!-- FINALLY -->
-    <div class="section">
+    <section class="section-header">
         <h2>Finally</h2>
-        <pre>
+    </section>
+
+    <section class="card">
+<pre>
 Promise.new(function(resolve)
     resolve("Done")
 end)
 :finally(function()
     print("Always runs")
 end)
-        </pre>
-    </div>
+</pre>
+    </section>
 
     <!-- ADVANCED -->
-    <div class="section">
+    <section class="section-header">
         <h2>Advanced Examples</h2>
+        <p>Utilities and extended API usage</p>
+    </section>
 
+    <section class="card">
         <h3>Promise.all</h3>
-        <pre>
+<pre>
 Promise.all({
     Promise.resolve(1),
     Promise.resolve(2),
@@ -169,10 +204,10 @@ Promise.all({
 }):andThen(function(results)
     print(results[1], results[2], results[3])
 end)
-        </pre>
+</pre>
 
         <h3>Retry</h3>
-        <pre>
+<pre>
 Promise.retry(function(resolve, reject)
     if math.random() > 0.5 then
         resolve("Success")
@@ -180,58 +215,22 @@ Promise.retry(function(resolve, reject)
         reject("Failed")
     end
 end, 3)
-        </pre>
+</pre>
 
         <h3>Delay</h3>
-        <pre>
+<pre>
 Promise.delay(2):andThen(function()
     print("2 seconds passed")
 end)
-        </pre>
-    </div>
-
-    <!-- EVENTS -->
-    <div class="section">
-        <h2>Events</h2>
-        <pre>
-local Players = game:GetService("Players")
-
-Promise.fromEvent(Players.PlayerAdded)
-:andThen(function(player)
-    print(player.Name .. " joined")
-end)
-        </pre>
-    </div>
-
-    <!-- TIMEOUT -->
-    <div class="section">
-        <h2>Timeout</h2>
-        <pre>
-Promise.timeOut(
-    Promise.delay(10),
-    3
-):catch(function(err)
-    warn(err)
-end)
-        </pre>
-    </div>
-
-    <!-- HTTP -->
-    <div class="section">
-        <h2>HTTP Example</h2>
-        <pre>
-Promise.sendToDiscord(
-    "WEBHOOK_URL",
-    { content = "Hello from Promise!" }
-)
-:andThen(print)
-:catch(warn)
-        </pre>
-    </div>
+</pre>
+    </section>
 
     <!-- API -->
-    <div class="section">
-        <h2>API Overview</h2>
+    <section class="section-header">
+        <h2>API</h2>
+    </section>
+
+    <section class="card">
         <ul>
             <li>Promise.new()</li>
             <li>andThen()</li>
@@ -245,9 +244,9 @@ Promise.sendToDiscord(
             <li>Promise.fromEvent()</li>
             <li>Promise.wrap()</li>
         </ul>
-    </div>
+    </section>
 
-</div>
+</main>
 
 <footer>
     © 2026 SillyDev2026
