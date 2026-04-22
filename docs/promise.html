@@ -9,41 +9,12 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
-body {
-    font-size: 16px;
-    line-height: 1.6;
-}
+/* Keep it simple + consistent with your site */
 
-/* NAV */
-nav a { font-size: 14px; }
-.logo { font-size: 18px; font-weight: 600; }
-
-/* TYPOGRAPHY */
-h1 { font-size: 34px; margin-bottom: 10px; }
-h2 { font-size: 24px; margin-top: 30px; margin-bottom: 10px; }
-h3 { font-size: 18px; margin-top: 20px; }
-
-p, li {
-    font-size: 14px;
-    opacity: 0.9;
-}
-
-/* CODE BLOCK */
-code, pre {
-    background: rgba(0,0,0,0.4);
-    padding: 10px;
-    border-radius: 8px;
-    display: block;
-    overflow-x: auto;
-    font-size: 13px;
-}
-
-/* SECTION SPACING */
 .section {
-    margin-bottom: 40px;
+    margin-bottom: 35px;
 }
 
-/* BADGE */
 .badge {
     display: inline-block;
     padding: 4px 10px;
@@ -52,6 +23,46 @@ code, pre {
     background: rgba(255,255,255,0.08);
     margin-bottom: 10px;
 }
+
+/* Typography scaled to match your other pages */
+h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    margin-top: 25px;
+}
+
+h3 {
+    font-size: 16px;
+    margin-top: 18px;
+}
+
+p, li {
+    font-size: 14px;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+/* Code blocks */
+pre {
+    background: rgba(0,0,0,0.35);
+    padding: 12px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-top: 10px;
+}
+
+/* Lists */
+ul {
+    padding-left: 18px;
+}
+
 </style>
 
 </head>
@@ -77,23 +88,20 @@ code, pre {
         <span class="badge">Roblox Module</span>
         <h1>Promise Documentation</h1>
         <p>
-            A powerful async system for Roblox Lua (Luau).  
-            Supports chaining, retries, async flows, and event handling.
+            A Lua (Luau) async system for Roblox featuring chaining, retries,
+            event handling, and async utilities.
         </p>
     </div>
 
     <!-- INSTALL -->
     <div class="section">
         <h2>Installation</h2>
-        <pre>
-local Promise = require(path.to.Promise)
-        </pre>
+        <pre>local Promise = require(path.to.Promise)</pre>
     </div>
 
-    <!-- BASIC USAGE -->
+    <!-- BASIC -->
     <div class="section">
         <h2>Basic Usage</h2>
-
         <pre>
 local Promise = require(PromiseModule)
 
@@ -109,7 +117,6 @@ end)
     <!-- CHAINING -->
     <div class="section">
         <h2>Chaining</h2>
-
         <pre>
 Promise.new(function(resolve)
     resolve(10)
@@ -123,16 +130,15 @@ end)
         </pre>
     </div>
 
-    <!-- ERROR HANDLING -->
+    <!-- ERROR -->
     <div class="section">
         <h2>Error Handling</h2>
-
         <pre>
 Promise.new(function(_, reject)
     reject("Something went wrong")
 end)
 :catch(function(err)
-    warn("Error:", err)
+    warn(err)
 end)
         </pre>
     </div>
@@ -140,7 +146,6 @@ end)
     <!-- FINALLY -->
     <div class="section">
         <h2>Finally</h2>
-
         <pre>
 Promise.new(function(resolve)
     resolve("Done")
@@ -166,7 +171,7 @@ Promise.all({
 end)
         </pre>
 
-        <h3>Retry System</h3>
+        <h3>Retry</h3>
         <pre>
 Promise.retry(function(resolve, reject)
     if math.random() > 0.5 then
@@ -188,7 +193,6 @@ end)
     <!-- EVENTS -->
     <div class="section">
         <h2>Events</h2>
-
         <pre>
 local Players = game:GetService("Players")
 
@@ -202,21 +206,19 @@ end)
     <!-- TIMEOUT -->
     <div class="section">
         <h2>Timeout</h2>
-
         <pre>
 Promise.timeOut(
     Promise.delay(10),
     3
 ):catch(function(err)
-    warn(err) -- Promise timed out
+    warn(err)
 end)
         </pre>
     </div>
 
-    <!-- HTTP / DISCORD -->
+    <!-- HTTP -->
     <div class="section">
         <h2>HTTP Example</h2>
-
         <pre>
 Promise.sendToDiscord(
     "WEBHOOK_URL",
@@ -227,15 +229,14 @@ Promise.sendToDiscord(
         </pre>
     </div>
 
-    <!-- API SUMMARY -->
+    <!-- API -->
     <div class="section">
         <h2>API Overview</h2>
-
         <ul>
             <li>Promise.new()</li>
-            <li>:andThen()</li>
-            <li>:catch()</li>
-            <li>:finally()</li>
+            <li>andThen()</li>
+            <li>catch()</li>
+            <li>finally()</li>
             <li>Promise.all()</li>
             <li>Promise.race()</li>
             <li>Promise.retry()</li>
