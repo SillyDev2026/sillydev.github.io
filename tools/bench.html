@@ -87,7 +87,7 @@ pre {
 <div class="container">
 
 <h1>⚡ Lua Bench Simulator</h1>
-<p>Write Lua-style code. It will be converted and benchmarked in JS.</p>
+<p>Write Lua-style benchmark code (safe execution engine).</p>
 
 <div class="card">
 
@@ -111,9 +111,7 @@ end, 100000)
 
 <script>
 
-/* =========================
-   OUTPUT
-========================= */
+/* ================= OUTPUT ================= */
 
 function log(msg) {
     document.getElementById("output").textContent += msg + "\n";
@@ -123,24 +121,11 @@ function clearOutput() {
     document.getElementById("output").textContent = "";
 }
 
-/* =========================
-   LUA → JS TRANSLATOR
-   (simple but effective)
-========================= */
-
-function luaToJs(code) {
-
-    return code
-        .replace(/local\s+/g, "let ")
-        .replace(/print/g, "log")
-        .replace(/end/g, "")
-        .replace(/--.*$/gm, "") // remove comments
-        .replace(/then/g, "{")
-        .replace(/function\s*\(/g, "function(");
-}
+/* ================= BENCH ENGINE ================= */
 
 function benchFunction(label, func, iterations = 1e6) {
 
+    // warmup
     for (let i = 0; i < 1000; i++) func();
 
     const start = performance.now();
@@ -155,19 +140,33 @@ function benchFunction(label, func, iterations = 1e6) {
     log(`${label} avg/op: ${((elapsed / iterations) * 1e6).toFixed(6)} µs`);
 }
 
+/* ================= LUA PARSER ================= */
+
 function runBench() {
 
     clearOutput();
 
-    let luaCode = document.getElementById("code").value;
+    const code = document.getElementById("code").value;
 
     try {
 
-        let jsCode = luaToJs(luaCode);
+        // Match: benchFunction("name", function() ... end, number)
+        const regex = /benchFunction\(\s*"([^"]+)"\s*,\s*function\s*\(\)\s*([\s\S]*?)end\s*,\s*(\d+)\s*\)/g;
 
-        let runnable = new Function("benchFunction", "log", jsCode);
+        let match;
 
-        runnable(benchFunction, log);
+        while ((match = regex.exec(code)) !== null) {
+
+            const label = match[1];
+            const body = match[2];
+            const iterations = parseInt(match[3]);
+
+            const func = new Function(`
+                ${body.replace(/local\s+/g, "let ")}
+            `);
+
+            benchFunction(label, func, iterations);
+        }
 
     } catch (e) {
         log("Error: " + e.message);
