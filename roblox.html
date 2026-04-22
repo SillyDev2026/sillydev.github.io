@@ -7,6 +7,87 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="style.css">
+
+<style>
+/* =========================
+   CLEAN TYPOGRAPHY SYSTEM
+   ========================= */
+
+body {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* NAV */
+nav a {
+    font-size: 14px;
+}
+
+.logo {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* PAGE TITLE */
+.container h1 {
+    font-size: 34px;
+    margin-bottom: 5px;
+}
+
+.container p {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* CARD HEADERS */
+.card h2 {
+    font-size: 20px;
+    margin-bottom: 6px;
+}
+
+.card h3 {
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.card p {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+/* FORM ELEMENTS */
+label {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+select, input {
+    font-size: 14px;
+}
+
+/* BUTTONS */
+.btn {
+    font-size: 14px;
+}
+
+/* GRID spacing */
+.grid {
+    gap: 18px;
+}
+
+/* PAGINATION */
+#pageInfo {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* FOOTER */
+footer {
+    font-size: 13px;
+    opacity: 0.7;
+}
+</style>
+
 </head>
 
 <body>
@@ -112,7 +193,7 @@ function render() {
     slice.forEach(item => {
         grid.innerHTML += `
         <div class="card">
-            <h2>${item.title}</h2>
+            <h3>${item.title}</h3>
             <p>${item.desc}</p>
             <a class="btn primary" href="${item.link}" target="_blank" rel="noopener noreferrer">
                 Open
