@@ -12,20 +12,69 @@
 href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 
 <style>
+
+/* =========================
+   CLEAN DOC UI (RESCALED)
+   ========================= */
+
+.container{
+    max-width:1000px;
+    margin:0 auto;
+    padding:0 16px;
+}
+
+/* HERO */
+.hero h1{
+    font-size:34px;
+    line-height:1.15;
+}
+
+.hero p{
+    font-size:15px;
+    opacity:0.85;
+}
+
+/* SECTION HEADERS */
 .section-header{
-    margin-top:40px;
-    margin-bottom:15px;
+    margin-top:28px;
+    margin-bottom:10px;
 }
 
 .section-header h2{
-    font-size:26px;
-    margin-bottom:5px;
+    font-size:22px;
+    margin-bottom:4px;
 }
 
 .section-header p{
+    font-size:14px;
     opacity:0.7;
 }
 
+/* CARDS */
+.card{
+    padding:18px;
+    border-radius:14px;
+}
+
+/* LISTS */
+.card ul,
+.card ol{
+    line-height:1.7;
+    font-size:14px;
+    opacity:0.9;
+}
+
+/* TAGS */
+.tag{
+    display:inline-block;
+    padding:3px 9px;
+    border-radius:999px;
+    font-size:11px;
+    margin-right:6px;
+    background:rgba(255,255,255,0.08);
+}
+
+/* CODE BLOCK */
 .code-wrap{
     position:relative;
 }
@@ -33,24 +82,31 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-d
 .codeblock{
     background:rgba(255,255,255,0.05);
     border:1px solid rgba(255,255,255,0.08);
-    border-radius:18px;
-    padding:22px;
+    border-radius:14px;
+
+    padding:16px;
     overflow-x:auto;
+
     font-family:Consolas, monospace;
-    font-size:14px;
-    line-height:1.7;
+    font-size:13px;
+    line-height:1.6;
+
     white-space:pre;
 }
 
+/* COPY BUTTON */
 .copy-btn{
     position:absolute;
-    top:14px;
-    right:14px;
+    top:10px;
+    right:10px;
+
     border:none;
     cursor:pointer;
-    padding:10px 14px;
-    border-radius:12px;
-    font-size:13px;
+
+    padding:7px 10px;
+    border-radius:10px;
+    font-size:12px;
+
     background:rgba(255,255,255,0.08);
     color:white;
     transition:0.2s;
@@ -60,21 +116,19 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-d
     background:rgba(255,255,255,0.14);
 }
 
-.tag{
-    display:inline-block;
-    padding:4px 10px;
-    border-radius:999px;
-    font-size:12px;
-    margin-right:6px;
-    background:rgba(255,255,255,0.08);
-}
-
+/* HR */
 hr.soft{
     border:none;
     height:1px;
     background:rgba(255,255,255,0.08);
-    margin:30px 0;
+    margin:22px 0;
 }
+
+/* BUTTONS */
+.btn{
+    font-size:13px;
+}
+
 </style>
 
 </head>
@@ -88,6 +142,7 @@ hr.soft{
 <a href="../index.html">Home</a>
 <a href="../about.html">About</a>
 <a href="../projects.html">Projects</a>
+<a href="../roblox-classes.html">Classes</a>
 <a href="../links.html">Links</a>
 <a href="../contact.html">Contact</a>
 </div>
@@ -95,6 +150,7 @@ hr.soft{
 
 <main class="container">
 
+<!-- HERO -->
 <section class="hero">
 <div class="card hero-card">
 
@@ -103,8 +159,8 @@ hr.soft{
 <h1>DataStore System</h1>
 
 <p>
-Full player saving system using DataStoreService, leaderstats,
-safe saving, and automatic load handling.
+Player saving system using DataStoreService, leaderstats creation,
+safe load/save logic, and automatic persistence handling.
 </p>
 
 <div class="hero-buttons">
@@ -115,112 +171,115 @@ safe saving, and automatic load handling.
 </div>
 </section>
 
+<!-- OVERVIEW -->
 <section class="section-header">
 <h2>Overview</h2>
-<p>What this system does.</p>
+<p>Core features of this system</p>
 </section>
 
 <section class="card">
 
-<ul style="line-height:1.9; opacity:0.9;">
-<li>✔ Loads player data on join</li>
-<li>✔ Creates leaderstats automatically</li>
-<li>✔ Saves data on leave</li>
-<li>✔ Uses pcall safety checks</li>
-<li>✔ Supports multiple value types</li>
+<ul>
+<li>Loads player data safely on join</li>
+<li>Creates leaderstats automatically</li>
+<li>Saves data on player exit</li>
+<li>Uses protected calls (pcall)</li>
+<li>Supports multiple value types</li>
 </ul>
 
-<div style="margin-top:18px;">
+<div style="margin-top:14px;">
 <span class="tag">DataStore</span>
-<span class="tag">Leaderstats</span>
 <span class="tag">Roblox</span>
+<span class="tag">Leaderstats</span>
+<span class="tag">Persistence</span>
 </div>
 
 </section>
 
 <hr class="soft">
 
+<!-- SETUP -->
 <section class="section-header">
 <h2>Setup Guide</h2>
-<p>How to install it in your game.</p>
+<p>How to install this system</p>
 </section>
 
 <section class="card">
 
-<ol style="line-height:1.9; opacity:0.9;">
-<li>Create a Script inside ServerScriptService</li>
-<li>Paste the full code below</li>
-<li>Enable API Services in game settings</li>
-<li>Publish your game</li>
-<li>Test in a real server</li>
+<ol>
+<li>Create a Script in ServerScriptService</li>
+<li>Paste the full source code below</li>
+<li>Enable API Services in Game Settings</li>
+<li>Publish your experience</li>
+<li>Test in a live server</li>
 </ol>
 
 </section>
 
 <hr class="soft">
 
+<!-- SOURCE -->
 <section id="source" class="section-header">
-<h2>Full Source Code</h2>
-<p>Lua formatted, copy-ready script.</p>
+<h2>Source Code</h2>
+<p>Lua implementation (copy-ready)</p>
 </section>
 
 <section class="card">
 
 <div class="code-wrap">
-<button class="copy-btn" onclick="copyCode()">Copy Code</button>
+<button class="copy-btn" onclick="copyCode()">Copy</button>
 
-<pre id="code" class="codeblock"><code class="language-lua">local DataStoreService = game:GetService("DataStoreService")
+<pre class="codeblock"><code class="language-lua">
+local DataStoreService = game:GetService('DataStoreService')
 local PlayerStore = DataStoreService:GetDataStore("PlayerData")
-local Players = game:GetService("Players")
+local Players = game:GetService('Players')
 
-local function getData(player: Player)
+local getData = function(player: Player)
 	local success, result = pcall(function()
-		return PlayerStore:GetAsync("Player_" .. player.UserId)
+		return PlayerStore:GetAsync('Player_' .. player.UserId)
 	end)
 
 	if not success then
-		player:Kick("Your data was corrupted or failed to load")
-		return nil
+		player:Kick('Your data was corupted or failed to load')
 	end
 
 	if success and result then
-		print(`Data loaded for {player.Name}`)
+		print(`Your data was resolved: {player.Name}`)
+		return result
 	end
-
-	return result
 end
 
-local function createFolders(player: Player, data)
-	local leaderstats = Instance.new("Folder")
-	leaderstats.Name = "leaderstats"
-	leaderstats.Parent = player
+local createFolders = function(player: Player, data)
+	local ls = Instance.new('Folder')
+	ls.Name = 'leaderstats'
+	ls.Parent = player
 
-	local coins = Instance.new("IntValue")
-	coins.Name = "Coins"
-	coins.Value = data and data.Coins or 0
-	coins.Parent = leaderstats
+	local Coins = Instance.new('NumberValue')
+	Coins.Name = 'Coins'
+	Coins.Value = data and data.Coins or 0
+	Coins.Parent = ls
 end
 
-local function loadData(player: Player)
+local loadData = function(player: Player)
 	local data = getData(player) or {}
 	createFolders(player, data)
 end
 
-local function isValidValue(value): boolean
+local check = function(value): boolean
 	return value:IsA("NumberValue")
-		or value:IsA("IntValue")
-		or value:IsA("BoolValue")
-		or value:IsA("StringValue")
+		or value:IsA('StringValue')
+		or value:IsA('BoolValue')
+		or value:IsA('IntValue')
 end
 
-local function saveTable(player: Player)
+local saveTable = function(player: Player)
 	local data = {}
 
 	for _, folder in pairs(player:GetChildren()) do
-		if folder:IsA("Folder") then
-			for _, value in pairs(folder:GetChildren()) do
-				if isValidValue(value) then
-					data[value.Name] = value.Value
+		if folder:IsA('Folder') then
+			for _, values in pairs(folder:GetChildren()) do
+				if check(values) then
+					data[values.Name] = values.Value
 				end
 			end
 		end
@@ -229,17 +288,17 @@ local function saveTable(player: Player)
 	return data
 end
 
-local function saveData(player: Player)
+local saveData = function(player: Player)
 	local data = saveTable(player)
 
-	local success, err = pcall(function()
-		PlayerStore:SetAsync("Player_" .. player.UserId, data)
+	local success, save = pcall(function()
+		return PlayerStore:SetAsync('Player_' .. player.UserId, data)
 	end)
 
 	if not success then
-		warn(`Failed to save data for {player.Name}`)
+		warn(`Failed to save to [{player.Name}]`)
 	else
-		print(`Saved data for {player.Name}`)
+		print(`Successfully saving: {player.Name}`)
 	end
 end
 
@@ -247,31 +306,11 @@ Players.PlayerAdded:Connect(loadData)
 Players.PlayerRemoving:Connect(saveData)
 
 game:BindToClose(function()
-	for _, player in pairs(Players:GetPlayers()) do
-		saveData(player)
-	end
 	task.wait(2)
-end)</code></pre>
+end)
+</code></pre>
 
 </div>
-
-</section>
-
-<hr class="soft">
-
-<section class="section-header">
-<h2>Notes</h2>
-<p>Important behavior details.</p>
-</section>
-
-<section class="card">
-
-<ul style="line-height:1.9; opacity:0.9;">
-<li>Data only saves in published games</li>
-<li>Studio may cache old data</li>
-<li>Avoid spam saving every frame</li>
-<li>Always use pcall with DataStores</li>
-</ul>
 
 </section>
 
@@ -288,15 +327,15 @@ end)</code></pre>
 hljs.highlightAll();
 
 function copyCode(){
-    const text = document.getElementById("code").innerText;
+    const text = document.querySelector(".codeblock").innerText;
     navigator.clipboard.writeText(text);
 
     const btn = document.querySelector(".copy-btn");
     btn.innerText = "Copied!";
 
     setTimeout(() => {
-        btn.innerText = "Copy Code";
-    }, 1500);
+        btn.innerText = "Copy";
+    }, 1200);
 }
 </script>
 

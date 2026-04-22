@@ -10,34 +10,38 @@
 
 <style>
 /* =========================
-   CLEAN TYPOGRAPHY SCALE
+   REFINED UI SCALE SYSTEM
    ========================= */
 
 body {
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.65;
 }
 
-/* Logo */
+/* NAV */
 .logo {
     font-size: 18px;
     font-weight: 600;
 }
 
-/* NAV LINKS */
 .nav-links a {
     font-size: 14px;
 }
 
+/* CONTAINER */
+.container {
+    padding-top: 28px;
+}
+
 /* HERO */
 .hero h1 {
-    font-size: 42px;
-    line-height: 1.1;
-    margin-bottom: 10px;
+    font-size: 38px;
+    line-height: 1.15;
+    margin-bottom: 8px;
 }
 
 .hero p {
-    font-size: 16px;
+    font-size: 15px;
     opacity: 0.85;
 }
 
@@ -48,8 +52,8 @@ body {
 
 /* SECTION TITLES */
 .section-title h2 {
-    font-size: 26px;
-    margin-bottom: 5px;
+    font-size: 24px;
+    margin-bottom: 6px;
 }
 
 .section-title p {
@@ -58,24 +62,69 @@ body {
 }
 
 /* CARDS */
+.card {
+    padding: 20px;
+}
+
 .card h3 {
-    font-size: 18px;
+    font-size: 17px;
     margin-bottom: 6px;
 }
 
 .card p {
     font-size: 14px;
-    opacity: 0.85;
+    opacity: 0.82;
+    line-height: 1.55;
 }
 
 /* BUTTONS */
 .btn {
     font-size: 14px;
+    padding: 10px 14px;
+    border-radius: 10px;
 }
 
-/* GRID spacing consistency */
+/* GRID */
 .grid {
     gap: 18px;
+}
+
+/* HERO BUTTON SPACING */
+.hero-buttons {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* FEATURE SECTION SPACING */
+.section-title {
+    margin-top: 40px;
+}
+
+/* FOOTER */
+footer {
+    font-size: 13px;
+    opacity: 0.65;
+    margin-top: 40px;
+    padding-bottom: 20px;
+}
+
+/* MOBILE OPTIMIZATION */
+@media (max-width: 600px) {
+
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .section-title h2 {
+        font-size: 20px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
 }
 </style>
 
@@ -111,8 +160,8 @@ body {
             </p>
 
             <div class="hero-buttons">
-                <a class="btn primary" href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
-                <a class="btn dark" href="https://www.roblox.com/" target="_blank" rel="noopener noreferrer">Roblox</a>
+                <a class="btn primary" href="https://github.com/" target="_blank">GitHub</a>
+                <a class="btn dark" href="https://www.roblox.com/" target="_blank">Roblox</a>
             </div>
 
         </div>
@@ -128,64 +177,40 @@ body {
 
         <div class="card">
             <h3>📦 Roblox Modules</h3>
-            <p>
-                Reusable systems, utility modules,
-                loaders, framework tools, and packages.
-            </p>
-
-            <div style="margin-top:18px;">
-                <a class="btn primary" href="roblox-modules.html">
-                    Open Page
-                </a>
+            <p>Reusable systems, utility modules, loaders, framework tools, and packages.</p>
+            <div style="margin-top:14px;">
+                <a class="btn primary" href="roblox-modules.html">Open Page</a>
             </div>
         </div>
 
         <div class="card">
             <h3>🎮 Roblox Games</h3>
-            <p>
-                Gameplay concepts, published games,
-                prototypes, systems, and live experiences.
-            </p>
-
-            <div style="margin-top:18px;">
-                <a class="btn primary" href="roblox-games.html">
-                    Open Page
-                </a>
+            <p>Gameplay concepts, published games, prototypes, systems, and live experiences.</p>
+            <div style="margin-top:14px;">
+                <a class="btn primary" href="roblox-games.html">Open Page</a>
             </div>
         </div>
 
         <div class="card">
             <h3>🏛 Roblox Classes</h3>
-            <p>
-                OOP systems, custom classes,
-                inheritance tools, and framework structures.
-            </p>
-
-            <div style="margin-top:18px;">
-                <a class="btn primary" href="roblox-classes.html">
-                    Open Page
-                </a>
+            <p>OOP systems, custom classes, inheritance tools, and framework structures.</p>
+            <div style="margin-top:14px;">
+                <a class="btn primary" href="roblox-classes.html">Open Page</a>
             </div>
         </div>
 
         <div class="card">
             <h3>🔢 Bnum Calc</h3>
-            <p>
-                Big number calculator for large values,
-                idle games, upgrades, and scaling math.
-            </p>
-
-            <div style="margin-top:18px;">
-                <a class="btn dark" href="bnum-calc.html">
-                    Open Page
-                </a>
+            <p>Big number calculator for scaling values, idle systems, and large number math.</p>
+            <div style="margin-top:14px;">
+                <a class="btn dark" href="bnum-calc.html">Open Page</a>
             </div>
         </div>
 
     </section>
 
     <!-- FEATURED BUILDS -->
-    <section class="section-title" style="margin-top:55px;">
+    <section class="section-title">
         <h2>Featured Builds</h2>
         <p>Current tools and released projects.</p>
     </section>
@@ -194,69 +219,39 @@ body {
 
         <div class="card">
             <h3>⚡ AutoRequire Plugin</h3>
-            <p>
-                Roblox Studio plugin for automatic
-                module requiring and cleaner workflow.
-            </p>
-
-            <div style="margin-top:18px;">
+            <p>Roblox Studio plugin for automatic module requiring and cleaner workflow.</p>
+            <div style="margin-top:14px;">
                 <a class="btn primary"
                    href="https://create.roblox.com/store/asset/112480312954763/AutoRequire"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                   Open Plugin
-                </a>
+                   target="_blank">Open Plugin</a>
             </div>
         </div>
 
         <div class="card">
             <h3>🖱 Clicker Game</h3>
-            <p>
-                Incremental Python clicker project
-                built with custom gameplay systems.
-            </p>
-
-            <div style="margin-top:18px;">
+            <p>Incremental Python clicker project built with custom gameplay systems.</p>
+            <div style="margin-top:14px;">
                 <a class="btn dark"
                    href="https://github.com/SillyDev2026/Clicker-Simulator-Python"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                   View
-                </a>
+                   target="_blank">View</a>
             </div>
         </div>
 
         <div class="card">
             <h3>🗄 Backend System</h3>
-            <p>
-                Python save architecture,
-                data pipeline logic, and storage systems.
-            </p>
-
-            <div style="margin-top:18px;">
+            <p>Python save architecture, data pipeline logic, and storage systems.</p>
+            <div style="margin-top:14px;">
                 <a class="btn dark"
                    href="https://github.com/SillyDev2026/Sqlite-DataBase"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                   View
-                </a>
+                   target="_blank">View</a>
             </div>
         </div>
 
         <div class="card">
             <h3>🌐 Flask Apps</h3>
-            <p>
-                Converted Python apps into
-                web-ready tools using Flask.
-            </p>
-
-            <div style="margin-top:18px;">
-                <a class="btn primary"
-                   href="https://github.com/"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                   View
-                </a>
+            <p>Converted Python apps into web-ready tools using Flask.</p>
+            <div style="margin-top:14px;">
+                <a class="btn primary" href="https://github.com/" target="_blank">View</a>
             </div>
         </div>
 

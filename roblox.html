@@ -10,7 +10,7 @@
 
 <style>
 /* =========================
-   CLEAN TYPOGRAPHY SYSTEM
+   CLEAN TYPOGRAPHY SCALE
    ========================= */
 
 body {
@@ -30,8 +30,8 @@ nav a {
 
 /* PAGE TITLE */
 .container h1 {
-    font-size: 34px;
-    margin-bottom: 5px;
+    font-size: 30px;
+    margin-bottom: 6px;
 }
 
 .container p {
@@ -39,9 +39,9 @@ nav a {
     opacity: 0.8;
 }
 
-/* CARD HEADERS */
+/* CARD HEADINGS */
 .card h2 {
-    font-size: 20px;
+    font-size: 22px;
     margin-bottom: 6px;
 }
 
@@ -55,7 +55,7 @@ nav a {
     opacity: 0.85;
 }
 
-/* FORM ELEMENTS */
+/* FORM */
 label {
     font-size: 14px;
     opacity: 0.85;
@@ -72,7 +72,7 @@ select, input {
 
 /* GRID spacing */
 .grid {
-    gap: 18px;
+    gap: 16px;
 }
 
 /* PAGINATION */
@@ -85,6 +85,15 @@ select, input {
 footer {
     font-size: 13px;
     opacity: 0.7;
+}
+
+/* SMALL UI CLEANUP */
+.card {
+    padding: 18px;
+}
+
+button {
+    cursor: pointer;
 }
 </style>
 
@@ -113,7 +122,7 @@ footer {
     <!-- SETTINGS -->
     <div class="card">
 
-        <label>Category:</label>
+        <label>Category</label><br>
         <select id="categorySelect">
             <option value="games">Games</option>
             <option value="modules">Modules</option>
@@ -121,10 +130,12 @@ footer {
 
         <br><br>
 
-        <label>Items per page (5 - 25):</label>
+        <label>Items per page (5 - 25)</label><br>
         <input id="limitInput" type="number" value="6" min="5" max="25">
 
-        <button class="btn primary" id="applyBtn">Apply</button>
+        <div style="margin-top:15px;">
+            <button class="btn primary" id="applyBtn">Apply</button>
+        </div>
 
     </div>
 
@@ -132,9 +143,9 @@ footer {
     <div id="grid" class="grid"></div>
 
     <!-- PAGINATION -->
-    <div style="text-align:center; margin-top:30px;">
+    <div style="text-align:center; margin-top:28px;">
         <button class="btn dark" id="backBtn">⬅ Back</button>
-        <span id="pageInfo" style="margin:0 15px;"></span>
+        <span id="pageInfo" style="margin:0 12px;"></span>
         <button class="btn dark" id="nextBtn">Next ➡</button>
     </div>
 
@@ -143,7 +154,6 @@ footer {
 <footer>© 2026 SillyDev2026</footer>
 
 <script>
-
 /* ================= DATA ================= */
 const data = {
     games: [
@@ -176,17 +186,13 @@ function render() {
     const grid = document.getElementById("grid");
     const pageInfo = document.getElementById("pageInfo");
 
-    if (!grid || !pageInfo) return;
-
     const items = getItems();
     const maxPage = getMaxPage(items);
 
     if (page > maxPage) page = maxPage;
 
     const start = (page - 1) * limit;
-    const end = start + limit;
-
-    const slice = items.slice(start, end);
+    const slice = items.slice(start, start + limit);
 
     grid.innerHTML = "";
 
@@ -212,9 +218,7 @@ function changeCategory() {
 }
 
 function nextPage() {
-    const items = getItems();
-    const max = getMaxPage(items);
-
+    const max = getMaxPage(getItems());
     if (page < max) {
         page++;
         render();
@@ -229,8 +233,7 @@ function prevPage() {
 }
 
 function applyLimit() {
-    const input = document.getElementById("limitInput");
-    const val = parseInt(input.value);
+    const val = parseInt(document.getElementById("limitInput").value);
 
     if (isNaN(val) || val < 5 || val > 25) {
         alert("Limit must be between 5 and 25");
@@ -244,7 +247,6 @@ function applyLimit() {
 
 /* ================= INIT ================= */
 window.onload = function () {
-
     document.getElementById("categorySelect").addEventListener("change", changeCategory);
     document.getElementById("applyBtn").addEventListener("click", applyLimit);
     document.getElementById("nextBtn").addEventListener("click", nextPage);
@@ -252,7 +254,6 @@ window.onload = function () {
 
     render();
 };
-
 </script>
 
 </body>

@@ -9,33 +9,62 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
-/* Small enhancements (optional but improves look a lot) */
+/* =========================
+   CLEAN UI SCALE (REDESIGNED)
+   ========================= */
 
+body {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* NAV */
+.logo {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.nav-links a {
+    font-size: 14px;
+}
+
+/* HERO */
+.hero h1 {
+    font-size: 40px;
+    line-height: 1.1;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 15px;
+    opacity: 0.85;
+}
+
+/* BADGE */
+.badge {
+    font-size: 12px;
+}
+
+/* SECTION HEADERS */
 .section-header {
     margin-top: 40px;
     margin-bottom: 15px;
 }
 
 .section-header h2 {
-    font-size: 26px;
-    margin-bottom: 5px;
+    font-size: 24px;
+    margin-bottom: 4px;
 }
 
 .section-header p {
+    font-size: 14px;
     opacity: 0.7;
 }
 
-.tag {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    margin-right: 6px;
-    background: rgba(255,255,255,0.08);
-}
-
+/* MODULE CARDS */
 .module-card h3 {
-    margin-bottom: 10px;
+    font-size: 18px;
+    margin-bottom: 6px;
 }
 
 .module-meta {
@@ -44,11 +73,43 @@
     margin-bottom: 10px;
 }
 
+.module-card p {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+/* TAGS */
+.tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    margin-right: 6px;
+    background: rgba(255,255,255,0.08);
+}
+
+/* BUTTONS */
+.btn {
+    font-size: 14px;
+}
+
+/* GRID */
+.grid {
+    gap: 18px;
+}
+
+/* DIVIDER */
 hr.soft {
     border: none;
     height: 1px;
     background: rgba(255,255,255,0.08);
     margin: 30px 0;
+}
+
+/* FOOTER */
+footer {
+    font-size: 13px;
+    opacity: 0.7;
 }
 </style>
 
@@ -79,8 +140,8 @@ hr.soft {
             <h1>Reusable Systems & Tools</h1>
 
             <p>
-                A collection of modular Roblox systems designed for clean architecture,
-                scalability, and fast development.
+                Modular Roblox systems designed for clean architecture,
+                scalability, and fast development workflows.
             </p>
 
             <div class="hero-buttons">
@@ -102,12 +163,9 @@ hr.soft {
         <div class="card module-card">
             <h3>Module Loader</h3>
             <div class="module-meta">System • Core Utility</div>
-            <p>
-                A fast module loader that automatically requires and caches modules
-                for clean project structure and performance.
-            </p>
+            <p>Fast module loader with caching and automatic requiring for clean structure.</p>
 
-            <div style="margin-top:15px;">
+            <div style="margin-top:12px;">
                 <span class="tag">Performance</span>
                 <span class="tag">Core</span>
                 <span class="tag">Utility</span>
@@ -117,12 +175,9 @@ hr.soft {
         <div class="card module-card">
             <h3>Signal System</h3>
             <div class="module-meta">Events • Communication</div>
-            <p>
-                Lightweight event system for handling signals between scripts without
-                relying heavily on BindableEvents.
-            </p>
+            <p>Lightweight signal/event system for clean script communication.</p>
 
-            <div style="margin-top:15px;">
+            <div style="margin-top:12px;">
                 <span class="tag">Events</span>
                 <span class="tag">Clean</span>
             </div>
@@ -131,14 +186,11 @@ hr.soft {
         <div class="card module-card">
             <h3>Promise Handler</h3>
             <div class="module-meta">Async • Utility</div>
-            <p>
-                Async workflow manager for Roblox systems, making chained operations
-                easier and safer to handle.
-            </p>
+            <p>Async workflow manager for safer chained operations and flow control.</p>
 
-            <div style="margin-top:15px;">
+            <div style="margin-top:12px;">
                 <span class="tag">Async</span>
-                <span class="tag">Stability</span>
+                <span class="tag">Stable</span>
             </div>
         </div>
 
@@ -146,7 +198,7 @@ hr.soft {
 
     <hr class="soft">
 
-    <!-- FEATURED MODULE BUTTONS -->
+    <!-- FEATURED MODULES -->
     <section class="section-header">
         <h2>Featured Modules</h2>
         <p>Quick access to core systems.</p>
@@ -158,34 +210,29 @@ hr.soft {
             <h3>Promise</h3>
             <p>Async handling system for structured workflows.</p>
 
-            <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-                <a class="btn primary"
-                   href="https://create.roblox.com/store/asset/114214627038854/Promise"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                   Get Module
-                </a>
-                <a class="btn dark" href="docs/promise.html">View Documents</a>
+            <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+                <a class="btn primary" href="https://create.roblox.com/store/asset/114214627038854/Promise">Get Module</a>
+                <a class="btn dark" href="docs/promise.html">Docs</a>
             </div>
         </div>
 
         <div class="card">
             <h3>Bnum</h3>
-            <p>Number utility system for scaling and formatting values.</p>
+            <p>Big number scaling system for incremental games and math utilities.</p>
 
-            <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-                <a class="btn primary" href="#bnum">Get Module</a>
-                <a class="btn dark" href="docs/bnum.html">View Documents</a>
+            <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+                <a class="btn primary" href="bnum-calc.html">Open</a>
+                <a class="btn dark" href="docs/bnum.html">Docs</a>
             </div>
         </div>
 
         <div class="card">
             <h3>Pipeline</h3>
-            <p>Data flow system for structured processing pipelines.</p>
+            <p>Structured data flow system for clean processing chains.</p>
 
-            <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-                <a class="btn primary" href="#pipeline">Get Module</a>
-                <a class="btn dark" href="docs/pipeline.html">View Documents</a>
+            <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+                <a class="btn primary" href="#pipeline">Open</a>
+                <a class="btn dark" href="docs/pipeline.html">Docs</a>
             </div>
         </div>
 
@@ -193,7 +240,7 @@ hr.soft {
 
     <hr class="soft">
 
-    <!-- SYSTEM DESIGN -->
+    <!-- DESIGN -->
     <section class="section-header">
         <h2>Design Philosophy</h2>
         <p>How these modules are structured.</p>
@@ -201,16 +248,12 @@ hr.soft {
 
     <section class="card">
 
-        <p>
-            All modules follow a few core principles:
-        </p>
-
-        <ul style="margin-top:15px; line-height:1.8; opacity:0.9;">
+        <ul style="line-height:1.8; opacity:0.9; font-size:14px;">
             <li>✔ Minimal dependencies</li>
-            <li>✔ Easy to plug into any project</li>
-            <li>✔ Performance-first design</li>
-            <li>✔ Clean and readable API structure</li>
-            <li>✔ Fully reusable across games</li>
+            <li>✔ Easy integration</li>
+            <li>✔ Performance-focused design</li>
+            <li>✔ Clean API structure</li>
+            <li>✔ Fully reusable systems</li>
         </ul>
 
     </section>
@@ -220,24 +263,24 @@ hr.soft {
     <!-- FUTURE -->
     <section class="section-header">
         <h2>In Development</h2>
-        <p>Upcoming modules being worked on.</p>
+        <p>Upcoming systems being built.</p>
     </section>
 
     <section class="grid">
 
         <div class="card">
             <h3>Data Controller</h3>
-            <p>Advanced save system with caching and backup layers.</p>
+            <p>Advanced saving system with caching layers.</p>
         </div>
 
         <div class="card">
             <h3>UI Framework</h3>
-            <p>Reusable UI system for fast interface development.</p>
+            <p>Reusable UI system for faster development.</p>
         </div>
 
         <div class="card">
             <h3>Combat System</h3>
-            <p>Modular combat engine for RPG-style games.</p>
+            <p>Modular RPG combat engine with abilities and effects.</p>
         </div>
 
     </section>
