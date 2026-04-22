@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>DataStore Class | SillyDev2026</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="../style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+<style>
+.section-header{
+    margin-top:40px;
+    margin-bottom:15px;
+}
+
+.section-header h2{
+    font-size:26px;
+    margin-bottom:5px;
+}
+
+.section-header p{
+    opacity:0.7;
+}
+
+.code-wrap{
+    position:relative;
+}
+
+.codeblock{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:18px;
+    padding:22px;
+    overflow-x:auto;
+    font-family:Consolas, monospace;
+    font-size:14px;
+    line-height:1.7;
+    white-space:pre;
+}
+
+.copy-btn{
+    position:absolute;
+    top:14px;
+    right:14px;
+    border:none;
+    cursor:pointer;
+    padding:10px 14px;
+    border-radius:12px;
+    font-size:13px;
+    background:rgba(255,255,255,0.08);
+    color:white;
+    transition:0.2s;
+}
+
+.copy-btn:hover{
+    background:rgba(255,255,255,0.14);
+}
+
+.tag{
+    display:inline-block;
+    padding:4px 10px;
+    border-radius:999px;
+    font-size:12px;
+    margin-right:6px;
+    background:rgba(255,255,255,0.08);
+}
+
+hr.soft{
+    border:none;
+    height:1px;
+    background:rgba(255,255,255,0.08);
+    margin:30px 0;
+}
+</style>
+
+</head>
+
+<body>
+
+<nav>
+<div class="logo">SillyDev2026</div>
+
+<div class="nav-links">
+<a href="../index.html">Home</a>
+<a href="../about.html">About</a>
+<a href="../projects.html">Projects</a>
+<a href="../links.html">Links</a>
+<a href="../contact.html">Contact</a>
+</div>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+<div class="card hero-card">
+
+<span class="badge">Roblox Class</span>
+
+<h1>DataStore System</h1>
+
+<p>
+Full player saving system using DataStoreService, leaderstats,
+safe saving, and automatic load handling.
+</p>
+
+<div class="hero-buttons">
+<a class="btn primary" href="../roblox-classes.html">Back</a>
+<a class="btn dark" href="#source">View Source</a>
+</div>
+
+</div>
+</section>
+
+<section class="section-header">
+<h2>Overview</h2>
+<p>What this system does.</p>
+</section>
+
+<section class="card">
+
+<ul style="line-height:1.9; opacity:0.9;">
+<li>✔ Loads player data on join</li>
+<li>✔ Creates leaderstats automatically</li>
+<li>✔ Saves data on leave</li>
+<li>✔ Uses pcall safety checks</li>
+<li>✔ Supports multiple value types</li>
+</ul>
+
+<div style="margin-top:18px;">
+<span class="tag">DataStore</span>
+<span class="tag">Leaderstats</span>
+<span class="tag">Roblox</span>
+</div>
+
+</section>
+
+<hr class="soft">
+
+<section class="section-header">
+<h2>Setup Guide</h2>
+<p>How to install it in your game.</p>
+</section>
+
+<section class="card">
+
+<ol style="line-height:1.9; opacity:0.9;">
+<li>Create a Script inside ServerScriptService</li>
+<li>Paste the full code below</li>
+<li>Enable API Services in game settings</li>
+<li>Publish your game</li>
+<li>Test in a real server</li>
+</ol>
+
+</section>
+
+<hr class="soft">
+
+<section id="source" class="section-header">
+<h2>Full Source Code</h2>
+<p>Lua formatted, copy-ready script.</p>
+</section>
+
+<section class="card">
+
+<div class="code-wrap">
+<button class="copy-btn" onclick="copyCode()">Copy Code</button>
+
+<pre id="code" class="codeblock"><code class="language-lua">local DataStoreService = game:GetService("DataStoreService")
+local PlayerStore = DataStoreService:GetDataStore("PlayerData")
+local Players = game:GetService("Players")
+
+local function getData(player: Player)
+	local success, result = pcall(function()
+		return PlayerStore:GetAsync("Player_" .. player.UserId)
+	end)
+
+	if not success then
+		player:Kick("Your data was corrupted or failed to load")
+		return nil
+	end
+
+	if success and result then
+		print(`Data loaded for {player.Name}`)
+	end
+
+	return result
+end
+
+local function createFolders(player: Player, data)
+	local leaderstats = Instance.new("Folder")
+	leaderstats.Name = "leaderstats"
+	leaderstats.Parent = player
+
+	local coins = Instance.new("IntValue")
+	coins.Name = "Coins"
+	coins.Value = data and data.Coins or 0
+	coins.Parent = leaderstats
+end
+
+local function loadData(player: Player)
+	local data = getData(player) or {}
+	createFolders(player, data)
+end
+
+local function isValidValue(value): boolean
+	return value:IsA("NumberValue")
+		or value:IsA("IntValue")
+		or value:IsA("BoolValue")
+		or value:IsA("StringValue")
+end
+
+local function saveTable(player: Player)
+	local data = {}
+
+	for _, folder in pairs(player:GetChildren()) do
+		if folder:IsA("Folder") then
+			for _, value in pairs(folder:GetChildren()) do
+				if isValidValue(value) then
+					data[value.Name] = value.Value
+				end
+			end
+		end
+	end
+
+	return data
+end
+
+local function saveData(player: Player)
+	local data = saveTable(player)
+
+	local success, err = pcall(function()
+		PlayerStore:SetAsync("Player_" .. player.UserId, data)
+	end)
+
+	if not success then
+		warn(`Failed to save data for {player.Name}`)
+	else
+		print(`Saved data for {player.Name}`)
+	end
+end
+
+Players.PlayerAdded:Connect(loadData)
+Players.PlayerRemoving:Connect(saveData)
+
+game:BindToClose(function()
+	for _, player in pairs(Players:GetPlayers()) do
+		saveData(player)
+	end
+	task.wait(2)
+end)</code></pre>
+
+</div>
+
+</section>
+
+<hr class="soft">
+
+<section class="section-header">
+<h2>Notes</h2>
+<p>Important behavior details.</p>
+</section>
+
+<section class="card">
+
+<ul style="line-height:1.9; opacity:0.9;">
+<li>Data only saves in published games</li>
+<li>Studio may cache old data</li>
+<li>Avoid spam saving every frame</li>
+<li>Always use pcall with DataStores</li>
+</ul>
+
+</section>
+
+</main>
+
+<footer>
+© 2026 SillyDev2026
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/lua.min.js"></script>
+
+<script>
+hljs.highlightAll();
+
+function copyCode(){
+    const text = document.getElementById("code").innerText;
+    navigator.clipboard.writeText(text);
+
+    const btn = document.querySelector(".copy-btn");
+    btn.innerText = "Copied!";
+
+    setTimeout(() => {
+        btn.innerText = "Copy Code";
+    }, 1500);
+}
+</script>
+
+</body>
+</html>

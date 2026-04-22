@@ -8,6 +8,9 @@
 
 <link rel="stylesheet" href="../style.css">
 
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
 <style>
 .section-header {
     margin-top: 40px;
@@ -39,25 +42,25 @@ hr.soft {
     margin: 30px 0;
 }
 
-/* CODE BLOCK + COPY */
-.code-block {
+/* CODE BLOCK */
+.code-wrap {
     position: relative;
 }
 
-pre {
+.codeblock {
     background: rgba(0,0,0,0.35);
-    padding: 12px;
-    border-radius: 8px;
+    border-radius: 10px;
+    padding: 16px;
     overflow-x: auto;
     font-size: 13px;
-    line-height: 1.5;
-    margin: 0;
+    line-height: 1.6;
 }
 
+/* COPY BUTTON */
 .copy-btn {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 10px;
+    right: 10px;
     border: none;
     padding: 6px 10px;
     font-size: 12px;
@@ -65,6 +68,10 @@ pre {
     background: rgba(255,255,255,0.1);
     color: white;
     cursor: pointer;
+}
+
+.copy-btn:hover {
+    background: rgba(255,255,255,0.2);
 }
 </style>
 
@@ -87,52 +94,56 @@ pre {
 
 <main class="container">
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="card hero-card">
+<!-- HERO -->
+<section class="hero">
+    <div class="card hero-card">
 
-            <span class="badge">Promise Module</span>
+        <span class="badge">Promise Module</span>
 
-            <h1>Async Workflow System</h1>
+        <h1>Async Workflow System</h1>
 
-            <p>
-                A Luau Promise implementation with chaining, retries, async handling,
-                and event utilities.
-            </p>
+        <p>
+            A Luau Promise implementation with chaining, retries, async handling,
+            and event utilities.
+        </p>
 
-            <div class="hero-buttons">
-                <a class="btn primary"
-                   href="https://create.roblox.com/store/asset/114214627038854/Promise"
-                   target="_blank">
-                   Get Module
-                </a>
+        <div class="hero-buttons">
+            <a class="btn primary"
+               href="https://create.roblox.com/store/asset/114214627038854/Promise"
+               target="_blank">
+               Get Module
+            </a>
 
-                <a class="btn dark" href="../roblox-modules.html">
-                   Back to Modules
-                </a>
-            </div>
-
+            <a class="btn dark" href="../roblox-modules.html">
+               Back to Modules
+            </a>
         </div>
-    </section>
 
-    <!-- INSTALL -->
-    <section class="section-header">
-        <h2>Installation</h2>
-    </section>
-
-    <div class="code-block">
-        <button class="copy-btn" onclick="copy(this)">Copy</button>
-        <pre>local Promise = require(path.to.Promise)</pre>
     </div>
+</section>
 
-    <!-- BASIC -->
-    <section class="section-header">
-        <h2>Basic Usage</h2>
-    </section>
+<!-- INSTALL -->
+<section class="section-header">
+    <h2>Installation</h2>
+</section>
 
-    <div class="code-block">
-        <button class="copy-btn" onclick="copy(this)">Copy</button>
-        <pre>
+<div class="code-wrap">
+    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+
+    <pre class="codeblock"><code class="language-lua">
+local Promise = require(path.to.Promise)
+    </code></pre>
+</div>
+
+<!-- BASIC -->
+<section class="section-header">
+    <h2>Basic Usage</h2>
+</section>
+
+<div class="code-wrap">
+    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+
+    <pre class="codeblock"><code class="language-lua">
 local Promise = require(PromiseModule)
 
 Promise.new(function(resolve)
@@ -141,17 +152,18 @@ Promise.new(function(resolve)
 end):andThen(function(result)
     print(result)
 end)
-        </pre>
-    </div>
+    </code></pre>
+</div>
 
-    <!-- CHAINING -->
-    <section class="section-header">
-        <h2>Chaining</h2>
-    </section>
+<!-- CHAINING -->
+<section class="section-header">
+    <h2>Chaining</h2>
+</section>
 
-    <div class="code-block">
-        <button class="copy-btn" onclick="copy(this)">Copy</button>
-        <pre>
+<div class="code-wrap">
+    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+
+    <pre class="codeblock"><code class="language-lua">
 Promise.new(function(resolve)
     resolve(10)
 end)
@@ -161,63 +173,65 @@ end)
 :andThen(function(v)
     print(v)
 end)
-        </pre>
-    </div>
+    </code></pre>
+</div>
 
-    <!-- ERROR -->
-    <section class="section-header">
-        <h2>Error Handling</h2>
-    </section>
+<!-- ERROR -->
+<section class="section-header">
+    <h2>Error Handling</h2>
+</section>
 
-    <div class="code-block">
-        <button class="copy-btn" onclick="copy(this)">Copy</button>
-        <pre>
+<div class="code-wrap">
+    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+
+    <pre class="codeblock"><code class="language-lua">
 Promise.new(function(_, reject)
     reject("Something went wrong")
 end)
 :catch(function(err)
     warn(err)
 end)
-        </pre>
-    </div>
+    </code></pre>
+</div>
 
-    <!-- FINALLY -->
-    <section class="section-header">
-        <h2>Finally</h2>
-    </section>
+<!-- FINALLY -->
+<section class="section-header">
+    <h2>Finally</h2>
+</section>
 
-    <div class="code-block">
-        <button class="copy-btn" onclick="copy(this)">Copy</button>
-        <pre>
+<div class="code-wrap">
+    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+
+    <pre class="codeblock"><code class="language-lua">
 Promise.new(function(resolve)
     resolve("Done")
 end)
 :finally(function()
     print("Always runs")
 end)
-        </pre>
-    </div>
+    </code></pre>
+</div>
 
-    <!-- API -->
-    <section class="section-header">
-        <h2>API</h2>
-    </section>
+<!-- API -->
+<section class="section-header">
+    <h2>API</h2>
+</section>
 
-    <section class="card">
-        <ul>
-            <li>Promise.new()</li>
-            <li>andThen()</li>
-            <li>catch()</li>
-            <li>finally()</li>
-            <li>Promise.all()</li>
-            <li>Promise.race()</li>
-            <li>Promise.retry()</li>
-            <li>Promise.delay()</li>
-            <li>Promise.timeOut()</li>
-            <li>Promise.fromEvent()</li>
-            <li>Promise.wrap()</li>
-        </ul>
-    </section>
+<section class="card">
+<ul style="line-height:1.8; opacity:0.9;">
+<li>Promise.new()</li>
+<li>andThen()</li>
+<li>catch()</li>
+<li>finally()</li>
+<li>Promise.all()</li>
+<li>Promise.race()</li>
+<li>Promise.retry()</li>
+<li>Promise.delay()</li>
+<li>Promise.timeOut()</li>
+<li>Promise.fromEvent()</li>
+<li>Promise.wrap()</li>
+</ul>
+</section>
 
 </main>
 
@@ -225,12 +239,18 @@ end)
     © 2026 SillyDev2026
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/lua.min.js"></script>
+
 <script>
-function copy(btn) {
-    const pre = btn.nextElementSibling;
-    navigator.clipboard.writeText(pre.innerText);
+hljs.highlightAll();
+
+function copyCode(btn) {
+    const code = btn.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code);
+
     btn.innerText = "Copied!";
-    setTimeout(() => btn.innerText = "Copy", 1000);
+    setTimeout(() => btn.innerText = "Copy", 1200);
 }
 </script>
 
