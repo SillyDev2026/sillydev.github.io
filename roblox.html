@@ -9,8 +9,9 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
+
 /* =========================
-   CLEAN TYPOGRAPHY SCALE
+   BASE SCALE
    ========================= */
 
 body {
@@ -19,16 +20,10 @@ body {
 }
 
 /* NAV */
-nav a {
-    font-size: 14px;
-}
+nav a { font-size: 14px; }
+.logo { font-size: 18px; font-weight: 600; }
 
-.logo {
-    font-size: 18px;
-    font-weight: 600;
-}
-
-/* PAGE TITLE */
+/* TITLES */
 .container h1 {
     font-size: 30px;
     margin-bottom: 6px;
@@ -39,10 +34,9 @@ nav a {
     opacity: 0.8;
 }
 
-/* CARD HEADINGS */
-.card h2 {
-    font-size: 22px;
-    margin-bottom: 6px;
+/* CARDS */
+.card {
+    padding: 18px;
 }
 
 .card h3 {
@@ -63,22 +57,20 @@ label {
 
 select, input {
     font-size: 14px;
+    padding: 6px;
 }
 
 /* BUTTONS */
 .btn {
     font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* GRID spacing */
+/* GRID */
 .grid {
     gap: 16px;
-}
-
-/* PAGINATION */
-#pageInfo {
-    font-size: 14px;
-    opacity: 0.8;
 }
 
 /* FOOTER */
@@ -87,14 +79,34 @@ footer {
     opacity: 0.7;
 }
 
-/* SMALL UI CLEANUP */
-.card {
-    padding: 18px;
+/* =========================
+   FIXED LAYOUT SYSTEM
+   ========================= */
+
+/* SETTINGS CARD */
+.settings {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-button {
-    cursor: pointer;
+/* BUTTON GROUP FIX */
+.button-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
 }
+
+/* PAGINATION FIX */
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 28px;
+}
+
 </style>
 
 </head>
@@ -120,20 +132,22 @@ button {
     <p>Select category and browse your creations</p>
 
     <!-- SETTINGS -->
-    <div class="card">
+    <div class="card settings">
 
-        <label>Category</label><br>
-        <select id="categorySelect">
-            <option value="games">Games</option>
-            <option value="modules">Modules</option>
-        </select>
+        <div>
+            <label>Category</label><br>
+            <select id="categorySelect">
+                <option value="games">Games</option>
+                <option value="modules">Modules</option>
+            </select>
+        </div>
 
-        <br><br>
+        <div>
+            <label>Items per page (5 - 25)</label><br>
+            <input id="limitInput" type="number" value="6" min="5" max="25">
+        </div>
 
-        <label>Items per page (5 - 25)</label><br>
-        <input id="limitInput" type="number" value="6" min="5" max="25">
-
-        <div style="margin-top:15px;">
+        <div class="button-row">
             <button class="btn primary" id="applyBtn">Apply</button>
         </div>
 
@@ -143,9 +157,9 @@ button {
     <div id="grid" class="grid"></div>
 
     <!-- PAGINATION -->
-    <div style="text-align:center; margin-top:28px;">
+    <div class="pagination">
         <button class="btn dark" id="backBtn">⬅ Back</button>
-        <span id="pageInfo" style="margin:0 12px;"></span>
+        <span id="pageInfo"></span>
         <button class="btn dark" id="nextBtn">Next ➡</button>
     </div>
 
@@ -154,25 +168,21 @@ button {
 <footer>© 2026 SillyDev2026</footer>
 
 <script>
-/* ================= DATA ================= */
 const data = {
     games: [
         { title: "Game Example 1", desc: "A Roblox game", link: "#" },
         { title: "Game Example 2", desc: "Another Roblox game", link: "#" }
     ],
-
     modules: [
         { title: "Bnum", desc: "BnumModule", link: "https://create.roblox.com/store/asset/133072011264214/Bnum" },
         { title: "NetStream", desc: "Network handler system", link: "https://create.roblox.com/store/asset/110479081610454/NetworkHandler" }
     ]
 };
 
-/* ================= STATE ================= */
 let page = 1;
 let limit = 6;
 let category = "games";
 
-/* ================= CORE ================= */
 function getItems() {
     return data[category] || [];
 }
@@ -181,18 +191,16 @@ function getMaxPage(items) {
     return Math.max(1, Math.ceil(items.length / limit));
 }
 
-/* ================= RENDER ================= */
 function render() {
     const grid = document.getElementById("grid");
     const pageInfo = document.getElementById("pageInfo");
 
     const items = getItems();
-    const maxPage = getMaxPage(items);
+    const max = getMaxPage(items);
 
-    if (page > maxPage) page = maxPage;
+    if (page > max) page = max;
 
-    const start = (page - 1) * limit;
-    const slice = items.slice(start, start + limit);
+    const slice = items.slice((page - 1) * limit, page * limit);
 
     grid.innerHTML = "";
 
@@ -201,59 +209,43 @@ function render() {
         <div class="card">
             <h3>${item.title}</h3>
             <p>${item.desc}</p>
-            <a class="btn primary" href="${item.link}" target="_blank" rel="noopener noreferrer">
-                Open
-            </a>
+            <a class="btn primary" href="${item.link}" target="_blank">Open</a>
         </div>`;
     });
 
-    pageInfo.innerText = `Page ${page} / ${maxPage}`;
+    pageInfo.innerText = `Page ${page} / ${max}`;
 }
 
-/* ================= ACTIONS ================= */
-function changeCategory() {
-    category = document.getElementById("categorySelect").value;
+document.getElementById("categorySelect").onchange = () => {
+    category = event.target.value;
     page = 1;
     render();
-}
+};
 
-function nextPage() {
-    const max = getMaxPage(getItems());
-    if (page < max) {
+document.getElementById("applyBtn").onclick = () => {
+    const v = parseInt(document.getElementById("limitInput").value);
+    if (v >= 5 && v <= 25) {
+        limit = v;
+        page = 1;
+        render();
+    }
+};
+
+document.getElementById("nextBtn").onclick = () => {
+    if (page < getMaxPage(getItems())) {
         page++;
         render();
     }
-}
+};
 
-function prevPage() {
+document.getElementById("backBtn").onclick = () => {
     if (page > 1) {
         page--;
         render();
     }
-}
-
-function applyLimit() {
-    const val = parseInt(document.getElementById("limitInput").value);
-
-    if (isNaN(val) || val < 5 || val > 25) {
-        alert("Limit must be between 5 and 25");
-        return;
-    }
-
-    limit = val;
-    page = 1;
-    render();
-}
-
-/* ================= INIT ================= */
-window.onload = function () {
-    document.getElementById("categorySelect").addEventListener("change", changeCategory);
-    document.getElementById("applyBtn").addEventListener("click", applyLimit);
-    document.getElementById("nextBtn").addEventListener("click", nextPage);
-    document.getElementById("backBtn").addEventListener("click", prevPage);
-
-    render();
 };
+
+render();
 </script>
 
 </body>
