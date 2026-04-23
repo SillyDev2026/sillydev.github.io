@@ -13,23 +13,37 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-d
 
 <style>
 
-/* CLEAN DOC UI */
+/* =========================
+   CLEAN RESCALED UI
+   ========================= */
 
 .container{
-    max-width:1000px;
+    max-width:960px;
     margin:0 auto;
-    padding:0 16px;
+    padding:0 18px;
 }
 
 /* HERO */
+.hero{
+    margin-top:10px;
+}
+
+.hero-card{
+    padding:24px;
+    border-radius:18px;
+}
+
 .hero h1{
-    font-size:34px;
+    font-size:30px;
     line-height:1.15;
+    margin:10px 0;
 }
 
 .hero p{
-    font-size:15px;
-    opacity:0.85;
+    font-size:14px;
+    line-height:1.65;
+    opacity:0.82;
+    max-width:720px;
 }
 
 /* SECTION */
@@ -39,29 +53,40 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-d
 }
 
 .section-header h2{
-    font-size:22px;
-    margin-bottom:4px;
+    font-size:21px;
+    margin:0 0 4px;
 }
 
 .section-header p{
-    font-size:14px;
-    opacity:0.7;
+    margin:0;
+    font-size:13px;
+    opacity:0.68;
 }
 
 /* CARD */
 .card{
     padding:18px;
-    border-radius:14px;
+    border-radius:16px;
+}
+
+/* LISTS */
+.card ul,
+.card ol{
+    margin:0;
+    padding-left:18px;
+    line-height:1.75;
+    font-size:14px;
+    opacity:0.92;
 }
 
 /* TAGS */
 .tag{
     display:inline-block;
-    padding:3px 9px;
+    padding:4px 10px;
     border-radius:999px;
     font-size:11px;
-    margin-right:6px;
-    background:rgba(255,255,255,0.08);
+    margin:6px 6px 0 0;
+    background:rgba(255,255,255,0.07);
 }
 
 /* CODE */
@@ -70,45 +95,89 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-d
 }
 
 .codeblock{
-    background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:14px;
-    padding:16px;
+    background:rgba(255,255,255,0.045);
+    border:1px solid rgba(255,255,255,0.07);
+    border-radius:16px;
+    padding:18px;
     overflow-x:auto;
     font-family:Consolas, monospace;
     font-size:13px;
-    line-height:1.6;
+    line-height:1.65;
     white-space:pre;
 }
 
-/* COPY BTN */
+/* COPY BUTTON */
 .copy-btn{
     position:absolute;
     top:10px;
     right:10px;
     border:none;
     cursor:pointer;
-    padding:7px 10px;
+    padding:7px 11px;
     border-radius:10px;
-    font-size:12px;
+    font-size:11px;
+    font-weight:600;
     background:rgba(255,255,255,0.08);
     color:white;
-    transition:0.2s;
+    transition:0.18s ease;
 }
 
 .copy-btn:hover{
     background:rgba(255,255,255,0.14);
 }
 
+/* DIVIDER */
 hr.soft{
     border:none;
     height:1px;
-    background:rgba(255,255,255,0.08);
-    margin:22px 0;
+    background:rgba(255,255,255,0.07);
+    margin:24px 0;
 }
 
+/* BUTTONS */
 .btn{
-    font-size:13px;
+    font-size:12px;
+    padding:10px 14px;
+}
+
+/* GRID */
+.grid-two{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+/* MOBILE */
+@media (max-width:700px){
+
+    .container{
+        padding:0 14px;
+    }
+
+    .hero h1{
+        font-size:26px;
+    }
+
+    .hero p{
+        font-size:13px;
+    }
+
+    .section-header h2{
+        font-size:19px;
+    }
+
+    .card{
+        padding:16px;
+    }
+
+    .codeblock{
+        font-size:12px;
+        padding:16px;
+    }
+
+    .grid-two{
+        grid-template-columns:1fr;
+    }
 }
 
 </style>
@@ -140,8 +209,9 @@ hr.soft{
 <h1>Bnum Number System</h1>
 
 <p>
-Massive number math system built for simulators, idle games,
-incrementals, and scientific scaling using buffer storage.
+High-performance massive number engine for simulators,
+idle games, upgrade systems, scaling formulas, and values
+far beyond normal Luau number limits.
 </p>
 
 <div class="hero-buttons">
@@ -155,27 +225,25 @@ incrementals, and scientific scaling using buffer storage.
 <!-- OVERVIEW -->
 <section class="section-header">
 <h2>Overview</h2>
-<p>Main features of Bnum</p>
+<p>Main features included in Bnum</p>
 </section>
 
 <section class="card">
 
-<ul style="line-height:1.7;">
-<li>Supports values far beyond normal Lua numbers</li>
-<li>Fast buffer-based storage format</li>
-<li>Add / Subtract / Multiply / Divide / Power</li>
-<li>Formatting suffixes (K, M, B, Qa, Qi...)</li>
-<li>Idle game cost scaling helpers</li>
-<li>Progress bars / ETA / percentages</li>
-<li>Safe comparisons for huge values</li>
-<li>Roblox optimized with native + optimize flags</li>
+<ul>
+<li>Supports gigantic values with logarithmic storage</li>
+<li>Fast buffer based number system</li>
+<li>Stable arithmetic for huge economies</li>
+<li>Readable suffix formatting</li>
+<li>Progress / percent / ETA helpers</li>
+<li>Perfect for simulators and incrementals</li>
 </ul>
 
 <div style="margin-top:14px;">
 <span class="tag">Huge Numbers</span>
 <span class="tag">Simulator</span>
-<span class="tag">Idle Game</span>
 <span class="tag">Economy</span>
+<span class="tag">Idle Game</span>
 <span class="tag">Roblox</span>
 </div>
 
@@ -186,16 +254,16 @@ incrementals, and scientific scaling using buffer storage.
 <!-- INSTALL -->
 <section class="section-header">
 <h2>Setup</h2>
-<p>How to use</p>
+<p>How to install</p>
 </section>
 
 <section class="card">
 
-<ol style="line-height:1.7;">
+<ol>
 <li>Create a ModuleScript named <b>Bnum</b></li>
-<li>Paste your source code into it</li>
-<li>Require it inside your scripts</li>
-<li>Use Bnum functions for economy math</li>
+<li>Paste the full source code inside</li>
+<li>Require it from your scripts</li>
+<li>Use Bnum for all economy math</li>
 </ol>
 
 </section>
@@ -217,6 +285,9 @@ incrementals, and scientific scaling using buffer storage.
 local Bnum = require(path.to.Bnum)
 
 local coins = Bnum.new(5, 6) -- 5e6
+local gems = Bnum.new(2, 9)
+
+Bnum.add(coins, gems)
 
 print(Bnum.format(coins))
 </code></pre>
@@ -230,12 +301,13 @@ print(Bnum.format(coins))
 <!-- METHODS -->
 <section class="section-header">
 <h2>Main Methods</h2>
-<p>Core functions available</p>
+<p>Most used functions</p>
 </section>
 
-<section class="card">
+<div class="grid-two">
 
-<ul style="columns:2; line-height:1.8;">
+<section class="card">
+<ul>
 <li>new()</li>
 <li>ensure()</li>
 <li>fromNumber()</li>
@@ -245,8 +317,15 @@ print(Bnum.format(coins))
 <li>div()</li>
 <li>pow()</li>
 <li>sqrt()</li>
+<li>root()</li>
 <li>log()</li>
+<li>exp()</li>
 <li>random()</li>
+</ul>
+</section>
+
+<section class="card">
+<ul>
 <li>cmp()</li>
 <li>min()</li>
 <li>max()</li>
@@ -254,15 +333,41 @@ print(Bnum.format(coins))
 <li>ceil()</li>
 <li>round()</li>
 <li>mod()</li>
+<li>clamp()</li>
 <li>format()</li>
-<li>toStr()</li>
 <li>percent()</li>
 <li>progress()</li>
 <li>dynamicCost()</li>
 <li>eta()</li>
-<li>clamp()</li>
-<li>abs()</li>
 </ul>
+</section>
+
+</div>
+
+<hr class="soft">
+
+<!-- GAME EXAMPLE -->
+<section class="section-header">
+<h2>Upgrade Cost Example</h2>
+<p>Scaling shop prices</p>
+</section>
+
+<section class="card">
+
+<div class="code-wrap">
+<button class="copy-btn" onclick="copyCode(this)">Copy</button>
+
+<pre class="codeblock"><code class="language-lua">
+local cost = Bnum.new(1, 3)
+local owned = Bnum.fromNumber(25)
+local scale = Bnum.fromNumber(1.15)
+
+Bnum.dynamicCost(cost, owned, scale, "exp")
+
+print(Bnum.format(cost))
+</code></pre>
+
+</div>
 
 </section>
 
@@ -271,7 +376,7 @@ print(Bnum.format(coins))
 <!-- SOURCE -->
 <section id="source" class="section-header">
 <h2>Source Code</h2>
-<p>Paste your Bnum module below</p>
+<p>Copy full module below if u want a really good Bnum for any game.</p>
 </section>
 
 <section class="card">
@@ -282,6 +387,7 @@ print(Bnum.format(coins))
 <pre class="codeblock"><code class="language-lua">
 --!optimize 2
 --!native
+--!nocheck
 
 local first = {'', 'k', 'm', 'b'}
 local firstset = {"", "U","D","T","Qd","Qn","Sx","Sp","Oc","No"}
@@ -1312,7 +1418,6 @@ return module
 </section>
 
 </main>
-
 
 <footer>
 © 2026 SillyDev2026
