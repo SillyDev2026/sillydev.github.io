@@ -7,64 +7,70 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="../style.css">
-
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 
 <style>
 
+/* ===== GLOBAL LAYOUT ===== */
+
 .container{
-    max-width:1100px;
+    max-width:1050px;
     margin:0 auto;
-    padding:28px 22px 60px;
+    padding:36px 20px 70px;
 }
 
+/* ===== HERO (MORE FOCUSED) ===== */
+
 .hero-card{
-    padding:34px;
-    border-radius:18px;
+    padding:42px;
+    border-radius:20px;
 }
 
 .hero h1{
-    font-size:40px;
-    margin:0 0 10px;
+    font-size:42px;
+    margin:0 0 12px;
+    line-height:1.05;
 }
 
 .hero p{
     opacity:0.8;
-    max-width:720px;
-    line-height:1.7;
+    max-width:700px;
+    line-height:1.65;
+    margin:0;
 }
 
 .hero-buttons{
     display:flex;
     gap:12px;
     flex-wrap:wrap;
-    margin-top:22px;
+    margin-top:26px;
 }
 
+/* ===== SECTIONS ===== */
+
 .section{
-    margin-top:40px;
+    margin-top:52px;
 }
 
 .section h2{
-    font-size:26px;
+    font-size:28px;
     margin-bottom:6px;
 }
 
 .section p{
     opacity:0.7;
+    margin:0;
 }
 
+/* ===== CARDS ===== */
+
 .card{
-    padding:24px;
+    padding:26px;
     border-radius:18px;
 }
 
-ul, ol{
-    line-height:1.8;
-    opacity:0.9;
-    padding-left:20px;
-}
+/* ===== TAGS ===== */
 
 .tag{
     display:inline-block;
@@ -75,6 +81,36 @@ ul, ol{
     background:rgba(255,255,255,0.08);
 }
 
+/* ===== LISTS ===== */
+
+ul, ol{
+    line-height:1.85;
+    opacity:0.9;
+    padding-left:20px;
+}
+
+/* ===== EXAMPLES (IMPROVED VISUAL HIERARCHY) ===== */
+
+.example-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+}
+
+.example-box{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    padding:18px;
+    border-radius:16px;
+}
+
+.example-box b{
+    display:block;
+    margin-bottom:8px;
+}
+
+/* ===== CODE BLOCK (CENTER FOCUS) ===== */
+
 .code-wrap{
     position:relative;
 }
@@ -82,24 +118,30 @@ ul, ol{
 .codeblock{
     background:rgba(255,255,255,0.05);
     border:1px solid rgba(255,255,255,0.08);
-    border-radius:16px;
-    padding:22px;
-    padding-top:50px;
+    border-radius:18px;
+
+    padding:24px;
+    padding-top:52px;
+
     overflow-x:auto;
     font-family:Consolas, monospace;
     font-size:13px;
-    line-height:1.65;
+    line-height:1.7;
     white-space:pre;
 }
+
+/* COPY BUTTON */
 
 .copy-btn{
     position:absolute;
     top:12px;
     right:12px;
+
     padding:7px 12px;
     border:none;
     border-radius:10px;
     font-size:12px;
+
     cursor:pointer;
     background:rgba(255,255,255,0.08);
     color:white;
@@ -109,19 +151,13 @@ ul, ol{
     background:rgba(255,255,255,0.14);
 }
 
+/* ===== DIVIDER ===== */
+
 hr.soft{
     border:none;
     height:1px;
     background:rgba(255,255,255,0.08);
-    margin:34px 0;
-}
-
-.example-box{
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.08);
-    padding:18px;
-    border-radius:14px;
-    margin-top:12px;
+    margin:44px 0;
 }
 
 </style>
@@ -153,8 +189,8 @@ hr.soft{
 <h1>Promise System</h1>
 
 <p>
-A full-featured asynchronous control system for Roblox.
-Supports chaining, retries, timeouts, event wrapping, and advanced async workflows.
+A high-performance asynchronous framework for Roblox.
+Handles chaining, retries, timeouts, events, and structured async flows.
 </p>
 
 <div class="hero-buttons">
@@ -168,28 +204,26 @@ Supports chaining, retries, timeouts, event wrapping, and advanced async workflo
 <!-- OVERVIEW -->
 <section class="section">
 <h2>Overview</h2>
-<p>Main capabilities</p>
+<p>Core capabilities of the system</p>
 </section>
 
 <section class="card">
-
 <ul>
-<li>Advanced async chaining (andThen)</li>
+<li>Promise chaining (andThen)</li>
 <li>Error handling (catch / Error)</li>
-<li>Retry system (retry / retryDelay / retryAsync)</li>
-<li>Timeout protection</li>
-<li>Event-to-promise conversion</li>
-<li>Race / all / filter utilities</li>
-<li>HTTP + logging utilities</li>
+<li>Retry + retryDelay + retryAsync</li>
+<li>Timeout control system</li>
+<li>Event wrapping utilities</li>
+<li>Race / All / Filter operations</li>
+<li>HTTP + logging helpers</li>
 </ul>
 
 <div style="margin-top:12px;">
 <span class="tag">Async</span>
-<span class="tag">Promises</span>
-<span class="tag">Roblox</span>
 <span class="tag">Framework</span>
+<span class="tag">Roblox</span>
+<span class="tag">Promises</span>
 </div>
-
 </section>
 
 <hr class="soft">
@@ -200,15 +234,13 @@ Supports chaining, retries, timeouts, event wrapping, and advanced async workflo
 </section>
 
 <section class="card">
-
 <ol>
-<li>Create a ModuleScript (ReplicatedStorage recommended)</li>
-<li>Paste the Promise system code</li>
-<li>Require it in your scripts</li>
-<li>Use chaining methods like :andThen()</li>
-<li>Use utilities like Promise.all / retry / delay</li>
+<li>Create ModuleScript in ReplicatedStorage</li>
+<li>Paste Promise system</li>
+<li>Require it in scripts</li>
+<li>Chain with :andThen()</li>
+<li>Handle errors with :catch()</li>
 </ol>
-
 </section>
 
 <hr class="soft">
@@ -216,20 +248,18 @@ Supports chaining, retries, timeouts, event wrapping, and advanced async workflo
 <!-- EXAMPLES -->
 <section class="section">
 <h2>Examples</h2>
-<p>How to use the system</p>
+<p>Usage patterns</p>
 </section>
 
-<section class="card">
+<section class="card example-grid">
 
 <div class="example-box">
 <b>Basic Promise</b>
 <pre>
-Promise.new(function(resolve, reject)
+Promise.new(function(resolve)
     task.wait(1)
     resolve("Done!")
-end):andThen(function(result)
-    print(result)
-end)
+end):andThen(print)
 </pre>
 </div>
 
@@ -240,9 +270,7 @@ Promise.resolve(10)
 :andThen(function(v)
     return v * 2
 end)
-:andThen(function(v)
-    print(v) -- 20
-end)
+:andThen(print)
 </pre>
 </div>
 
@@ -261,7 +289,7 @@ end, 3)
 </div>
 
 <div class="example-box">
-<b>Events → Promise</b>
+<b>Event → Promise</b>
 <pre>
 Promise.fromEvent(game.Players.PlayerAdded)
 :andThen(function(player)
@@ -277,7 +305,7 @@ end)
 <!-- SOURCE -->
 <section id="source" class="section">
 <h2>Source Code</h2>
-<p>Full Promise implementation (paste-ready)</p>
+<p>Full implementation (paste below)</p>
 </section>
 
 <section class="card">
@@ -406,6 +434,30 @@ function Promise:finally<T>(onFinally: () -> ()): Promise<T>
 	)
 end
 
+function Promise:await(): any
+	if self._state == "FULFILLED" then
+		return self._value
+	elseif self._state == "REJECTED" then
+		error(self._value)
+	else
+		local co = coroutine.running()
+		assert(co, "Promise:await must be called inside a coroutine")
+		self:andThen(function(value)
+			task.spawn(function()
+				coroutine.resume(co, value)
+			end)
+		end, function(err)
+			task.spawn(function()
+				coroutine.resume(co, nil, err)
+			end)
+		end)
+		local ok, result = coroutine.yield()
+		if ok == nil then
+			error(result)
+		end
+		return result
+	end
+end
 function Promise:Error<T>(onError: (any) -> T?): Promise<T>
 	return self:andThen(nil, function(reason)
 		local ok, res = pcall(onError, reason)
