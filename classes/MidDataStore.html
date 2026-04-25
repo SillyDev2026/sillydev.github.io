@@ -373,7 +373,7 @@ function DataStoreClass:_retry(callback)
 	return false, result
 end
 
-function DataStoreClass:Load(userId: number)
+function DataStoreClass:Load(userId: number): Profile
 	if self.profiles[userId] then
 		return self.profiles[userId]
 	end
