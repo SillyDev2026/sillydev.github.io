@@ -12,143 +12,148 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-d
 
 <style>
 
-/* ===== GLOBAL LAYOUT ===== */
-
-.container{
-    max-width:1050px;
-    margin:0 auto;
-    padding:36px 20px 70px;
+:root{
+    --space-xs:8px;
+    --space-sm:14px;
+    --space-md:22px;
+    --space-lg:34px;
 }
 
-/* ===== HERO (MORE FOCUSED) ===== */
+.container{
+    max-width:1100px;
+    margin:0 auto;
+    padding:28px 22px 60px;
+}
+
+.hero{
+    margin-top:18px;
+}
 
 .hero-card{
-    padding:42px;
-    border-radius:20px;
+    padding:34px;
+    border-radius:18px;
+}
+
+.badge{
+    display:inline-block;
+    margin-bottom:16px;
 }
 
 .hero h1{
-    font-size:42px;
+    font-size:40px;
+    line-height:1.1;
     margin:0 0 12px;
-    line-height:1.05;
 }
 
 .hero p{
-    opacity:0.8;
-    max-width:700px;
-    line-height:1.65;
+    font-size:16px;
+    line-height:1.7;
+    max-width:720px;
+    opacity:0.88;
     margin:0;
 }
 
 .hero-buttons{
     display:flex;
-    gap:12px;
     flex-wrap:wrap;
-    margin-top:26px;
+    gap:12px;
+    margin-top:24px;
 }
 
-/* ===== SECTIONS ===== */
-
-.section{
-    margin-top:52px;
+.hero-buttons .btn{
+    padding:11px 18px;
+    font-size:14px;
 }
 
-.section h2{
-    font-size:28px;
-    margin-bottom:6px;
+/* ===== SECTIONS (MATCH DATASTORE STYLE) ===== */
+
+.section-header{
+    margin-top:38px;
+    margin-bottom:14px;
 }
 
-.section p{
-    opacity:0.7;
+.section-header h2{
+    font-size:26px;
+    margin:0 0 6px;
+}
+
+.section-header p{
+    font-size:14px;
     margin:0;
+    opacity:0.72;
 }
 
-/* ===== CARDS ===== */
+/* ===== CARD ===== */
 
 .card{
-    padding:26px;
+    padding:24px;
     border-radius:18px;
+}
+
+.card ul,
+.card ol{
+    margin:0;
+    padding-left:22px;
+    line-height:1.85;
+    font-size:15px;
+    opacity:0.92;
 }
 
 /* ===== TAGS ===== */
 
 .tag{
     display:inline-block;
-    padding:5px 10px;
+    padding:5px 11px;
     border-radius:999px;
     font-size:12px;
-    margin:6px 6px 0 0;
+    margin:6px 8px 0 0;
     background:rgba(255,255,255,0.08);
 }
 
-/* ===== LISTS ===== */
-
-ul, ol{
-    line-height:1.85;
-    opacity:0.9;
-    padding-left:20px;
-}
-
-/* ===== EXAMPLES (IMPROVED VISUAL HIERARCHY) ===== */
-
-.example-grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:14px;
-}
-
-.example-box{
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.08);
-    padding:18px;
-    border-radius:16px;
-}
-
-.example-box b{
-    display:block;
-    margin-bottom:8px;
-}
-
-/* ===== CODE BLOCK (CENTER FOCUS) ===== */
+/* ===== CODE BLOCK ===== */
 
 .code-wrap{
     position:relative;
+    margin-top:6px;
 }
 
 .codeblock{
     background:rgba(255,255,255,0.05);
     border:1px solid rgba(255,255,255,0.08);
-    border-radius:18px;
+    border-radius:16px;
 
-    padding:24px;
-    padding-top:52px;
+    padding:22px;
+    padding-top:56px;
 
     overflow-x:auto;
+
     font-family:Consolas, monospace;
     font-size:13px;
-    line-height:1.7;
+    line-height:1.65;
+
     white-space:pre;
 }
 
-/* COPY BUTTON */
-
 .copy-btn{
     position:absolute;
-    top:12px;
-    right:12px;
+    top:14px;
+    right:14px;
 
-    padding:7px 12px;
     border:none;
+    cursor:pointer;
+
+    padding:8px 14px;
     border-radius:10px;
     font-size:12px;
+    font-weight:600;
 
-    cursor:pointer;
     background:rgba(255,255,255,0.08);
     color:white;
 }
 
 .copy-btn:hover{
     background:rgba(255,255,255,0.14);
+    transform:translateY(-1px);
 }
 
 /* ===== DIVIDER ===== */
@@ -157,7 +162,27 @@ hr.soft{
     border:none;
     height:1px;
     background:rgba(255,255,255,0.08);
-    margin:44px 0;
+    margin:34px 0;
+}
+
+/* ===== NAV + FOOTER ===== */
+
+nav{
+    padding:18px 24px;
+}
+
+.nav-links{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    align-items:center;
+}
+
+footer{
+    text-align:center;
+    padding:24px;
+    opacity:0.7;
+    font-size:14px;
 }
 
 </style>
@@ -168,6 +193,7 @@ hr.soft{
 
 <nav>
 <div class="logo">SillyDev2026</div>
+
 <div class="nav-links">
 <a href="../index.html">Home</a>
 <a href="../about.html">About</a>
@@ -184,13 +210,13 @@ hr.soft{
 <section class="hero">
 <div class="card hero-card">
 
-<span class="tag">Roblox Class</span>
+<span class="badge">Roblox Class</span>
 
 <h1>Promise System</h1>
 
 <p>
-A high-performance asynchronous framework for Roblox.
-Handles chaining, retries, timeouts, events, and structured async flows.
+A powerful asynchronous framework for Roblox built for structured
+flow control, chaining, retries, event handling, and clean async design.
 </p>
 
 <div class="hero-buttons">
@@ -202,81 +228,94 @@ Handles chaining, retries, timeouts, events, and structured async flows.
 </section>
 
 <!-- OVERVIEW -->
-<section class="section">
+<section class="section-header">
 <h2>Overview</h2>
-<p>Core capabilities of the system</p>
+<p>Main features of this system</p>
 </section>
 
 <section class="card">
+
 <ul>
-<li>Promise chaining (andThen)</li>
-<li>Error handling (catch / Error)</li>
-<li>Retry + retryDelay + retryAsync</li>
-<li>Timeout control system</li>
-<li>Event wrapping utilities</li>
-<li>Race / All / Filter operations</li>
-<li>HTTP + logging helpers</li>
+<li>Promise chaining with andThen()</li>
+<li>Error handling with catch() and Error()</li>
+<li>Retry system (retry / retryDelay / retryAsync)</li>
+<li>Timeout protection system</li>
+<li>Event-to-promise conversion</li>
+<li>Race / all / filter utilities</li>
+<li>HTTP + logging utilities</li>
 </ul>
 
-<div style="margin-top:12px;">
+<div style="margin-top:18px;">
 <span class="tag">Async</span>
 <span class="tag">Framework</span>
-<span class="tag">Roblox</span>
 <span class="tag">Promises</span>
+<span class="tag">Roblox</span>
 </div>
+
 </section>
 
 <hr class="soft">
 
 <!-- SETUP -->
-<section class="section">
-<h2>Setup</h2>
+<section class="section-header">
+<h2>Setup Guide</h2>
+<p>How to install and use</p>
 </section>
 
 <section class="card">
+
 <ol>
-<li>Create ModuleScript in ReplicatedStorage</li>
-<li>Paste Promise system</li>
-<li>Require it in scripts</li>
-<li>Chain with :andThen()</li>
-<li>Handle errors with :catch()</li>
+<li>Create a ModuleScript in ReplicatedStorage</li>
+<li>Paste the Promise system code inside</li>
+<li>Require it in your scripts</li>
+<li>Use :andThen() for chaining logic</li>
+<li>Use :catch() for error handling</li>
 </ol>
+
 </section>
 
 <hr class="soft">
 
 <!-- EXAMPLES -->
-<section class="section">
+<section class="section-header">
 <h2>Examples</h2>
-<p>Usage patterns</p>
+<p>Common usage patterns</p>
 </section>
 
-<section class="card example-grid">
+<section class="card">
 
-<div class="example-box">
-<b>Basic Promise</b>
-<pre>
+<ul>
+<li><b>Basic Promise</b></li>
+</ul>
+
+<pre class="codeblock">
 Promise.new(function(resolve)
     task.wait(1)
     resolve("Done!")
 end):andThen(print)
 </pre>
-</div>
 
-<div class="example-box">
-<b>Chaining</b>
-<pre>
+<br>
+
+<ul>
+<li><b>Chaining</b></li>
+</ul>
+
+<pre class="codeblock">
 Promise.resolve(10)
 :andThen(function(v)
     return v * 2
 end)
 :andThen(print)
 </pre>
-</div>
 
-<div class="example-box">
-<b>Retry System</b>
-<pre>
+<br>
+
+<ul>
+<li><b>Retry System</b></li>
+</ul>
+
+<pre class="codeblock">
 Promise.retry(function(resolve, reject)
     if math.random() > 0.5 then
         resolve("Success")
@@ -286,26 +325,28 @@ Promise.retry(function(resolve, reject)
 end, 3)
 :andThen(print)
 </pre>
-</div>
 
-<div class="example-box">
-<b>Event → Promise</b>
-<pre>
+<br>
+
+<ul>
+<li><b>Event → Promise</b></li>
+</ul>
+
+<pre class="codeblock">
 Promise.fromEvent(game.Players.PlayerAdded)
 :andThen(function(player)
     print(player.Name)
 end)
 </pre>
-</div>
 
 </section>
 
 <hr class="soft">
 
 <!-- SOURCE -->
-<section id="source" class="section">
+<section id="source" class="section-header">
 <h2>Source Code</h2>
-<p>Full implementation (paste below)</p>
+<p>Full implementation (paste your code below)</p>
 </section>
 
 <section class="card">
