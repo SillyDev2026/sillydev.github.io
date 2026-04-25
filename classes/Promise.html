@@ -220,7 +220,7 @@ Supports chaining, retries, timeouts, event wrapping, and utilities like all/rac
 
 <div class="example-box">
 <b>Basic Promise</b>
-<pre class="codeblock">
+<pre class="codeblock"><code class="language-lua">
 Promise.new(function(resolve)
     task.wait(1)
     resolve("Done!")
@@ -232,7 +232,7 @@ end)
 
 <div class="example-box">
 <b>Chaining</b>
-<pre class="codeblock">
+<pre class="codeblock"><code class="language-lua">
 Promise.resolve(5)
 :andThen(function(v)
     return v * 2
@@ -245,7 +245,7 @@ end)
 
 <div class="example-box">
 <b>Retry Example</b>
-<pre class="codeblock">
+<pre class="codeblock"><code class="language-lua">
 Promise.retry(function(resolve, reject)
     if math.random() > 0.5 then
         resolve("Success")
@@ -258,7 +258,7 @@ end, 3):andThen(print)
 
 <div class="example-box">
 <b>Event → Promise</b>
-<pre class="codeblock">
+<pre class="codeblock"><code class="language-lua">
 Promise.fromEvent(game.Players.PlayerAdded)
 :andThen(function(player)
     print(player.Name)
