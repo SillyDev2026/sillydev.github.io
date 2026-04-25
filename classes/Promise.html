@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Promise Class | SillyDev2026</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="../style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+<style>
+
+.container{
+    max-width:1100px;
+    margin:0 auto;
+    padding:28px 22px 60px;
+}
+
+.hero-card{
+    padding:34px;
+    border-radius:18px;
+}
+
+.hero h1{
+    font-size:40px;
+    margin:0 0 10px;
+}
+
+.hero p{
+    opacity:0.8;
+    max-width:720px;
+    line-height:1.7;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:22px;
+}
+
+.section{
+    margin-top:40px;
+}
+
+.section h2{
+    font-size:26px;
+    margin-bottom:6px;
+}
+
+.section p{
+    opacity:0.7;
+}
+
+.card{
+    padding:24px;
+    border-radius:18px;
+}
+
+ul, ol{
+    line-height:1.8;
+    opacity:0.9;
+    padding-left:20px;
+}
+
+.tag{
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:999px;
+    font-size:12px;
+    margin:6px 6px 0 0;
+    background:rgba(255,255,255,0.08);
+}
+
+.code-wrap{
+    position:relative;
+}
+
+.codeblock{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:16px;
+    padding:22px;
+    padding-top:50px;
+    overflow-x:auto;
+    font-family:Consolas, monospace;
+    font-size:13px;
+    line-height:1.65;
+    white-space:pre;
+}
+
+.copy-btn{
+    position:absolute;
+    top:12px;
+    right:12px;
+    padding:7px 12px;
+    border:none;
+    border-radius:10px;
+    font-size:12px;
+    cursor:pointer;
+    background:rgba(255,255,255,0.08);
+    color:white;
+}
+
+.copy-btn:hover{
+    background:rgba(255,255,255,0.14);
+}
+
+hr.soft{
+    border:none;
+    height:1px;
+    background:rgba(255,255,255,0.08);
+    margin:34px 0;
+}
+
+.example-box{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    padding:18px;
+    border-radius:14px;
+    margin-top:12px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+<div class="logo">SillyDev2026</div>
+<div class="nav-links">
+<a href="../index.html">Home</a>
+<a href="../about.html">About</a>
+<a href="../projects.html">Projects</a>
+<a href="../roblox-classes.html">Classes</a>
+<a href="../links.html">Links</a>
+<a href="../contact.html">Contact</a>
+</div>
+</nav>
+
+<main class="container">
+
+<!-- HERO -->
+<section class="hero">
+<div class="card hero-card">
+
+<span class="tag">Roblox Class</span>
+
+<h1>Promise System</h1>
+
+<p>
+A full-featured asynchronous control system for Roblox.
+Supports chaining, retries, timeouts, event wrapping, and advanced async workflows.
+</p>
+
+<div class="hero-buttons">
+<a class="btn primary" href="../roblox-classes.html">Back</a>
+<a class="btn dark" href="#source">View Source</a>
+</div>
+
+</div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="section">
+<h2>Overview</h2>
+<p>Main capabilities</p>
+</section>
+
+<section class="card">
+
+<ul>
+<li>Advanced async chaining (andThen)</li>
+<li>Error handling (catch / Error)</li>
+<li>Retry system (retry / retryDelay / retryAsync)</li>
+<li>Timeout protection</li>
+<li>Event-to-promise conversion</li>
+<li>Race / all / filter utilities</li>
+<li>HTTP + logging utilities</li>
+</ul>
+
+<div style="margin-top:12px;">
+<span class="tag">Async</span>
+<span class="tag">Promises</span>
+<span class="tag">Roblox</span>
+<span class="tag">Framework</span>
+</div>
+
+</section>
+
+<hr class="soft">
+
+<!-- SETUP -->
+<section class="section">
+<h2>Setup</h2>
+</section>
+
+<section class="card">
+
+<ol>
+<li>Create a ModuleScript (ReplicatedStorage recommended)</li>
+<li>Paste the Promise system code</li>
+<li>Require it in your scripts</li>
+<li>Use chaining methods like :andThen()</li>
+<li>Use utilities like Promise.all / retry / delay</li>
+</ol>
+
+</section>
+
+<hr class="soft">
+
+<!-- EXAMPLES -->
+<section class="section">
+<h2>Examples</h2>
+<p>How to use the system</p>
+</section>
+
+<section class="card">
+
+<div class="example-box">
+<b>Basic Promise</b>
+<pre>
+Promise.new(function(resolve, reject)
+    task.wait(1)
+    resolve("Done!")
+end):andThen(function(result)
+    print(result)
+end)
+</pre>
+</div>
+
+<div class="example-box">
+<b>Chaining</b>
+<pre>
+Promise.resolve(10)
+:andThen(function(v)
+    return v * 2
+end)
+:andThen(function(v)
+    print(v) -- 20
+end)
+</pre>
+</div>
+
+<div class="example-box">
+<b>Retry System</b>
+<pre>
+Promise.retry(function(resolve, reject)
+    if math.random() > 0.5 then
+        resolve("Success")
+    else
+        reject("Fail")
+    end
+end, 3)
+:andThen(print)
+</pre>
+</div>
+
+<div class="example-box">
+<b>Events → Promise</b>
+<pre>
+Promise.fromEvent(game.Players.PlayerAdded)
+:andThen(function(player)
+    print(player.Name)
+end)
+</pre>
+</div>
+
+</section>
+
+<hr class="soft">
+
+<!-- SOURCE -->
+<section id="source" class="section">
+<h2>Source Code</h2>
+<p>Full Promise implementation (paste-ready)</p>
+</section>
+
+<section class="card">
+
+<div class="code-wrap">
+<button class="copy-btn" onclick="copyCode()">Copy</button>
+
+<pre class="codeblock"><code class="language-lua">
+--!native
+--!optimize 2
+local HttpService = game:GetService('HttpService')
+
+local Promise = {}
+Promise.__index = Promise
+
+local PENDING, FULFILLED, REJECTED = "PENDING", "FULFILLED", "REJECTED"
+
+type Callback<T> = {
+	fulfilled: (T) -> (),
+	rejected: (any) -> (),
+	resolve: (T) -> (),
+	reject: (any) -> ()
+}
+
+export type Promise<T> = {
+	_state: string,
+	_value: T?,
+	_callbacks: {Callback<T>},
+	andThen: (self: Promise<T>, onFulfilled: ((T) -> T)?, onRejected: ((any) -> T)?) -> Promise<T>,
+	catch: (self: Promise<T>, onRejected: (any) -> T) -> Promise<T>,
+	finally: (self: Promise<T>, onFinally: () -> ()) -> Promise<T>,
+	Error: (self: Promise<T>, onError: (any) -> T?) -> Promise<T>
+}
+
+local function retryHelper<T>(executor: (resolve: (T) -> (), reject: (any) -> ()) -> (), remaining: number, delaySeconds: number?, resolve: (T) -> (), reject: (any) -> ())
+	Promise.new(executor):andThen(resolve)
+		:catch(function(err)
+			if remaining > 0 then
+				if delaySeconds then
+					Promise.delay(delaySeconds):andThen(function()
+						retryHelper(executor, remaining - 1, delaySeconds, resolve, reject)
+					end)
+				else
+					retryHelper(executor, remaining - 1, nil, resolve, reject)
+				end
+			else
+				reject(err)
+			end
+		end)
+end
+
+function Promise.new<T>(executor: (resolve: (T) -> (), reject: (any) -> ()) -> ()): Promise<T>
+	assert(type(executor) == "function", "Executor must be a function")
+	local self: Promise<T> = setmetatable({
+		_state = PENDING,
+		_value = nil,
+		_callbacks = {},
+	}, Promise)
+
+	local function resolve(value: T)
+		if self._state ~= PENDING then return end
+		self._state = FULFILLED
+		self._value = value
+		self:_flushCallbacks()
+	end
+
+	local function reject(reason: any)
+		if self._state ~= PENDING then return end
+		self._state = REJECTED
+		self._value = reason
+		self:_flushCallbacks()
+	end
+
+	local ok, err = pcall(executor, resolve, reject)
+	if not ok then reject(err) end
+	return self
+end
+
+function Promise:_flushCallbacks()
+	local callbacks = self._callbacks
+	self._callbacks = {}
+	for _, cb in ipairs(callbacks) do
+		local fn = self._state == FULFILLED and cb.fulfilled or cb.rejected
+		if fn then
+			local ok, result = pcall(fn, self._value)
+			if not ok and cb.reject then cb.reject(result) end
+			if ok and cb.resolve then cb.resolve(result) end
+		end
+	end
+end
+
+function Promise:andThen<T>(onFulfilled: ((T) -> T)?, onRejected: ((any) -> T)?): Promise<T>
+	local parent: Promise<T> = self
+	return Promise.new(function(resolve, reject)
+		if parent._state == FULFILLED then
+			local ok, result = pcall(onFulfilled or function(v) return v end, parent._value)
+			if ok then resolve(result) else reject(result) end
+		elseif parent._state == REJECTED then
+			local ok, result = pcall(onRejected or function(e) error(e) end, parent._value)
+			if ok then resolve(result) else reject(result) end
+		else
+			parent._callbacks[#parent._callbacks + 1] = {
+				fulfilled = onFulfilled or function(v) return v end,
+				rejected = onRejected or function(e) error(e) end,
+				resolve = resolve,
+				reject = reject
+			}
+		end
+	end)
+end
+
+function Promise:catch<T>(onRejected: (any) -> T): Promise<T>
+	return self:andThen(nil, onRejected)
+end
+
+function Promise:finally<T>(onFinally: () -> ()): Promise<T>
+	return self:andThen(
+		function(value)
+			if onFinally then onFinally() end
+			return value
+		end,
+		function(reason)
+			if onFinally then onFinally() end
+			error(reason)
+		end
+	)
+end
+
+function Promise:Error<T>(onError: (any) -> T?): Promise<T>
+	return self:andThen(nil, function(reason)
+		local ok, res = pcall(onError, reason)
+		if not ok then error(res) end
+		return res
+	end)
+end
+
+function Promise.resolve<T>(value: T): Promise<T>
+	return Promise.new(function(resolve) resolve(value) end)
+end
+
+function Promise.all<T>(promises: {Promise<T>}): Promise<{T}>
+	return Promise.new(function(resolve, reject)
+		local results: {T} = {}
+		local count = 0
+		local total = #promises
+		if total == 0 then resolve(results) return end
+		for i, p in ipairs(promises) do
+			p:andThen(function(v)
+				results[i] = v
+				count += 1
+				if count == total then resolve(results) end
+			end, reject)
+		end
+	end)
+end
+
+function Promise.retry<T>(executor: (resolve: (T) -> (), reject: (any) -> ()) -> (), retries: number): Promise<T>
+	return Promise.new(function(resolve, reject)
+		retryHelper(executor, retries, nil, resolve, reject)
+	end)
+end
+
+function Promise.retryDelay<T>(executor: (resolve: (T) -> (), reject: (any) -> ()) -> (), retries: number, delaySeconds: number): Promise<T>
+	return Promise.new(function(resolve, reject)
+		retryHelper(executor, retries, delaySeconds, resolve, reject)
+	end)
+end
+
+function Promise.retryAsync<T>(executor: (resolve: (T) -> (), reject: (any) -> ()) -> (), retries: number?, delaySeconds: number?): Promise<T>
+	retries = retries or 30
+	delaySeconds = delaySeconds or 0.3
+	return Promise.new(function(resolve, reject)
+		retryHelper(executor, retries, delaySeconds, resolve, reject)
+	end)
+end
+
+function Promise.delay(seconds: number): Promise<() -> ()>
+	return Promise.new(function(resolve) task.delay(seconds, resolve) end)
+end
+
+function Promise.timeOut<T>(promise: Promise<T>, seconds: number): Promise<T>
+	return Promise.new(function(resolve, reject)
+		local timedOut = false
+		task.delay(seconds, function()
+			timedOut = true
+			reject("Promise timed out")
+		end)
+		promise:andThen(function(v) if not timedOut then resolve(v) end end, function(r) if not timedOut then reject(r) end end)
+	end)
+end
+
+function Promise.resume<T>(thread: thread): Promise<T>
+	return Promise.new(function(resolve, reject)
+		local ok, result = coroutine.resume(thread)
+		if ok then resolve(result) else reject(result) end
+	end)
+end
+
+function Promise.wrap<T>(func: (...any) -> T): (...any) -> Promise<T>
+	return function(...: any)
+		local args = {...}
+		return Promise.new(function(resolve, reject)
+			local ok, res = pcall(func, table.unpack(args))
+			if ok then resolve(res) else reject(res) end
+		end)
+	end
+end
+
+function Promise.repeatUntil<T>(executor: () -> T, delaySeconds: number): Promise<T>
+	return Promise.new(function(resolve, reject)
+		local ok, res
+		repeat
+			ok, res = pcall(executor)
+			if not ok then task.wait(delaySeconds) end
+		until ok
+		resolve(res)
+	end)
+end
+
+function Promise.race<T>(promises: {Promise<T>}): Promise<T>
+	return Promise.new(function(resolve, reject)
+		for _, p in ipairs(promises) do
+			p:andThen(resolve, reject)
+		end
+	end)
+end
+
+function Promise.filter<T>(promises: {Promise<T>}, filterFunc: (T) -> boolean): Promise<{T}>
+	return Promise.all(promises):andThen(function(results)
+		local filtered: {T} = {}
+		for _, v in ipairs(results) do
+			if filterFunc(v) then table.insert(filtered, v) end
+		end
+		return filtered
+	end)
+end
+
+function Promise.fromEvent<T>(signal: RBXScriptSignal): Promise<T>
+	return Promise.new(function(resolve)
+		local conn
+		conn = signal:Connect(function(...)
+			resolve(...)
+			conn:Disconnect()
+		end)
+	end)
+end
+
+function Promise.fromEvents<T>(signals: {RBXScriptSignal}): Promise<{T}>
+	return Promise.new(function(resolve)
+		local results: {T} = {}
+		local completed = 0
+		local total = #signals
+		for i, s in ipairs(signals) do
+			s:Connect(function(...)
+				results[i] = {...}
+				completed += 1
+				if completed == total then resolve(results) end
+			end)
+		end
+	end)
+end
+
+local LOG_LEVELS = {Debug=true, Info=true, Warn=true, Error=true}
+function Promise.LogMessage(level: string, message: string)
+	return Promise.new(function(resolve, reject)
+		if not LOG_LEVELS[level] then return reject("Invalid log level") end
+		local msg = string.format("[PromiseModule] [%s] %s", level, message)
+		if level == "Error" then reject(msg); error(msg)
+		elseif level == "Warn" then warn(msg)
+		else print(msg) end
+		resolve(msg)
+	end)
+end
+
+function Promise.CreateEmbed(embed: {title: string?, description: string?})
+	return Promise.new(function(resolve, reject)
+		if type(embed) ~= "table" then return reject("Embed must be a table") end
+		if embed.title and #embed.title > 256 then return reject("Title too long") end
+		if embed.description and #embed.description > 4086 then return reject("Description too long") end
+		resolve(embed)
+	end)
+end
+
+function Promise.sendToDiscord(url: string, data: any, content_type: Enum.HttpContentType?)
+	return Promise.new(function(resolve, reject)
+		local ok, res = pcall(function()
+			local json = HttpService:JSONEncode(data)
+			return HttpService:PostAsync(url, json, content_type or Enum.HttpContentType.ApplicationJson)
+		end)
+		if ok and res then resolve(res) else reject("Failed to send to Discord") end
+	end)
+end
+
+function Promise.print() print(Promise) end
+
+return Promise
+</code></pre>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+© 2026 SillyDev2026
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/lua.min.js"></script>
+
+<script>
+hljs.highlightAll();
+
+function copyCode(){
+    const text = document.querySelector(".codeblock").innerText;
+    navigator.clipboard.writeText(text);
+
+    const btn = document.querySelector(".copy-btn");
+    btn.innerText = "Copied!";
+
+    setTimeout(() => btn.innerText = "Copy", 1200);
+}
+</script>
+
+</body>
+</html>
