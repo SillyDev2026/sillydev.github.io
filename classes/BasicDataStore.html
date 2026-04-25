@@ -13,120 +13,212 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-d
 
 <style>
 
-/* =========================
-   CLEAN DOC UI (RESCALED)
-   ========================= */
-
-.container{
-    max-width:1000px;
-    margin:0 auto;
-    padding:0 16px;
+:root{
+    --space-xs:8px;
+    --space-sm:14px;
+    --space-md:22px;
+    --space-lg:34px;
 }
 
-/* HERO */
+.container{
+    max-width:1100px;
+    margin:0 auto;
+    padding:28px 22px 60px;
+}
+
+.hero{
+    margin-top:18px;
+}
+
+.hero-card{
+    padding:34px;
+    border-radius:18px;
+}
+
+.badge{
+    display:inline-block;
+    margin-bottom:16px;
+}
+
 .hero h1{
-    font-size:34px;
-    line-height:1.15;
+    font-size:40px;
+    line-height:1.1;
+    margin:0 0 12px;
 }
 
 .hero p{
-    font-size:15px;
-    opacity:0.85;
+    font-size:16px;
+    line-height:1.7;
+    max-width:720px;
+    opacity:0.88;
+    margin:0;
 }
 
-/* SECTION HEADERS */
+.hero-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:24px;
+}
+
+.hero-buttons .btn{
+    padding:11px 18px;
+    font-size:14px;
+}
+
 .section-header{
-    margin-top:28px;
-    margin-bottom:10px;
+    margin-top:38px;
+    margin-bottom:14px;
 }
 
 .section-header h2{
-    font-size:22px;
-    margin-bottom:4px;
+    font-size:26px;
+    margin:0 0 6px;
 }
 
 .section-header p{
     font-size:14px;
-    opacity:0.7;
+    margin:0;
+    opacity:0.72;
 }
 
-/* CARDS */
 .card{
-    padding:18px;
-    border-radius:14px;
+    padding:24px;
+    border-radius:18px;
 }
 
-/* LISTS */
 .card ul,
 .card ol{
-    line-height:1.7;
-    font-size:14px;
-    opacity:0.9;
+    margin:0;
+    padding-left:22px;
+    line-height:1.85;
+    font-size:15px;
+    opacity:0.92;
 }
 
-/* TAGS */
 .tag{
     display:inline-block;
-    padding:3px 9px;
+    padding:5px 11px;
     border-radius:999px;
-    font-size:11px;
-    margin-right:6px;
+    font-size:12px;
+    margin:6px 8px 0 0;
     background:rgba(255,255,255,0.08);
 }
 
-/* CODE BLOCK */
 .code-wrap{
     position:relative;
+    margin-top:6px;
 }
 
 .codeblock{
     background:rgba(255,255,255,0.05);
     border:1px solid rgba(255,255,255,0.08);
-    border-radius:14px;
+    border-radius:16px;
 
-    padding:16px;
+    padding:22px;
+    padding-top:56px;
+
     overflow-x:auto;
 
     font-family:Consolas, monospace;
     font-size:13px;
-    line-height:1.6;
+    line-height:1.65;
 
     white-space:pre;
 }
-
-/* COPY BUTTON */
 .copy-btn{
     position:absolute;
-    top:10px;
-    right:10px;
+    top:14px;
+    right:14px;
 
     border:none;
     cursor:pointer;
 
-    padding:7px 10px;
+    padding:8px 14px;
     border-radius:10px;
     font-size:12px;
+    font-weight:600;
 
     background:rgba(255,255,255,0.08);
     color:white;
-    transition:0.2s;
+    transition:0.2s ease;
 }
 
 .copy-btn:hover{
     background:rgba(255,255,255,0.14);
+    transform:translateY(-1px);
 }
 
-/* HR */
 hr.soft{
     border:none;
     height:1px;
     background:rgba(255,255,255,0.08);
-    margin:22px 0;
+    margin:34px 0;
 }
 
-/* BUTTONS */
 .btn{
-    font-size:13px;
+    font-size:14px;
+}
+nav{
+    padding:18px 24px;
+}
+
+.nav-links{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    align-items:center;
+}
+
+footer{
+    text-align:center;
+    padding:24px;
+    opacity:0.7;
+    font-size:14px;
+}
+
+@media (max-width: 768px){
+
+    .container{
+        padding:18px 14px 50px;
+    }
+
+    .hero-card,
+    .card{
+        padding:20px;
+    }
+
+    .hero h1{
+        font-size:32px;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    .section-header h2{
+        font-size:22px;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .hero-buttons .btn{
+        text-align:center;
+    }
+
+    .copy-btn{
+        top:10px;
+        right:10px;
+    }
+
+    .codeblock{
+        font-size:12px;
+        padding:18px;
+        padding-top:52px;
+    }
 }
 
 </style>
@@ -150,7 +242,6 @@ hr.soft{
 
 <main class="container">
 
-<!-- HERO -->
 <section class="hero">
 <div class="card hero-card">
 
@@ -171,7 +262,6 @@ safe load/save logic, and automatic persistence handling.
 </div>
 </section>
 
-<!-- OVERVIEW -->
 <section class="section-header">
 <h2>Overview</h2>
 <p>Core features of this system</p>
@@ -187,7 +277,7 @@ safe load/save logic, and automatic persistence handling.
 <li>Supports multiple value types</li>
 </ul>
 
-<div style="margin-top:14px;">
+<div style="margin-top:18px;">
 <span class="tag">DataStore</span>
 <span class="tag">Roblox</span>
 <span class="tag">Leaderstats</span>
@@ -198,7 +288,6 @@ safe load/save logic, and automatic persistence handling.
 
 <hr class="soft">
 
-<!-- SETUP -->
 <section class="section-header">
 <h2>Setup Guide</h2>
 <p>How to install this system</p>
@@ -218,7 +307,6 @@ safe load/save logic, and automatic persistence handling.
 
 <hr class="soft">
 
-<!-- SOURCE -->
 <section id="source" class="section-header">
 <h2>Source Code</h2>
 <p>Lua implementation (copy-ready)</p>
@@ -238,13 +326,12 @@ local getData = function(player: Player)
 	local success, result = pcall(function()
 		return PlayerStore:GetAsync('Player_' .. player.UserId)
 	end)
-
 	if not success then
 		player:Kick('Your data was corupted or failed to load')
 	end
-
+	local format = `Your data was resolved: {player.Name}`
 	if success and result then
-		print(`Your data was resolved: {player.Name}`)
+		print(format)
 		return result
 	end
 end
@@ -253,7 +340,6 @@ local createFolders = function(player: Player, data)
 	local ls = Instance.new('Folder')
 	ls.Name = 'leaderstats'
 	ls.Parent = player
-
 	local Coins = Instance.new('NumberValue')
 	Coins.Name = 'Coins'
 	Coins.Value = data and data.Coins or 0
@@ -266,16 +352,12 @@ local loadData = function(player: Player)
 end
 
 local check = function(value): boolean
-	return value:IsA("NumberValue")
-		or value:IsA('StringValue')
-		or value:IsA('BoolValue')
-		or value:IsA('IntValue')
+	return value:IsA("NumberValue") or value:IsA('StringValue') or value:IsA('BoolValue') or value:IsA('IntValue')
 end
 
 local saveTable = function(player: Player)
 	local data = {}
-
-	for _, folder in pairs(player:GetChildren()) do
+	for i, folder in pairs(player:GetChildren()) do
 		if folder:IsA('Folder') then
 			for _, values in pairs(folder:GetChildren()) do
 				if check(values) then
@@ -284,17 +366,14 @@ local saveTable = function(player: Player)
 			end
 		end
 	end
-
 	return data
 end
 
 local saveData = function(player: Player)
 	local data = saveTable(player)
-
 	local success, save = pcall(function()
 		return PlayerStore:SetAsync('Player_' .. player.UserId, data)
 	end)
-
 	if not success then
 		warn(`Failed to save to [{player.Name}]`)
 	else
