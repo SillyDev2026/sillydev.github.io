@@ -1,0 +1,62 @@
+/* Shared site UX layer. Loaded last to override older per-page pixel rules. */
+:root { color-scheme: dark; --site-text:#e8f1ff; --site-accent:#7dd3fc; --site-focus:#fcd34d; }
+html { scroll-padding-top:5rem; }
+body { font-size: 1rem; line-height:1.6; overflow-wrap:anywhere; }
+button,input,select,textarea { font:inherit; }
+button { cursor:pointer; }
+button:disabled { cursor:not-allowed; opacity:.45; }
+a { text-underline-offset:.18em; }
+:where(a,button,input,select,textarea,[tabindex]):focus-visible { outline:3px solid var(--site-focus); outline-offset:3px; }
+.skip-link { position:fixed; top:.5rem; left:.5rem; transform:translateY(-160%); z-index:10000; background:#fcd34d; color:#101726; padding:.65rem 1rem; border-radius:.5rem; }
+.skip-link:focus { transform:none; }
+.site-nav { position:sticky; top:0; z-index:900; width:100%; display:flex; justify-content:space-between; align-items:center; flex-wrap:nowrap; gap:1rem; padding:.7rem max(1rem,calc((100% - 1100px)/2)); background:rgba(8,14,26,.94); border-bottom:1px solid rgba(125,211,252,.2); backdrop-filter:blur(15px); }
+.site-nav .site-logo { flex:none; font-size:1.13rem; font-weight:800; letter-spacing:-.025em; color:#f2f8ff; text-decoration:none; opacity:1; white-space:nowrap; }
+.site-nav .site-logo span { color:#7dd3fc; }
+.site-nav .nav-links { display:flex; gap:clamp(.2rem,1vw,.7rem); flex-wrap:wrap; align-items:center; justify-content:flex-end; }
+.site-nav .nav-links a { font-size:.9rem; display:inline-flex; align-items:center; min-height:2.6rem; padding:.35rem .65rem; border-radius:.6rem; font-weight:600; color:#d8e4f3; opacity:1; text-decoration:none; transform:none; }
+.site-nav .nav-links a:hover,.site-nav .nav-links a[aria-current="page"] { color:#7dd3fc; background:rgba(56,189,248,.11); }
+.site-nav .site-menu-toggle { display:none; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); border-radius:.65rem; padding:.55rem .8rem; color:#fff; }
+.container { width:min(1100px,calc(100% - 2rem)); padding:clamp(1.25rem,3vw,2.5rem) 0; }
+.hero { padding:clamp(1rem,4vw,3rem) 0 clamp(.8rem,2vw,1.5rem); }
+.hero h1 { font-size:clamp(1.85rem,5vw,3.2rem); line-height:1.15; text-wrap:balance; }
+.section-title h2,.section-header h2 { font-size:clamp(1.25rem,2.6vw,1.7rem); line-height:1.2; }
+.grid { grid-template-columns:repeat(auto-fit,minmax(min(100%,15.5rem),1fr)); gap:clamp(.75rem,2vw,1.1rem); }
+.card,.hero-card { min-width:0; max-width:100%; }
+.card:hover { transform:translateY(-2px); }
+.card .btn { max-width:100%; }
+.btn { min-height:2.75rem; cursor:pointer; text-align:center; }
+input,select,textarea { max-width:100%; min-width:0; background:#19263b; color:#f3f8ff; border:1px solid #64748b; border-radius:.6rem; padding:.65rem .75rem; }
+input::placeholder,textarea::placeholder { color:#a8b6cb; }
+input:invalid { border-color:#fb7185; }
+.code-wrap,pre,.codeblock { max-width:100%; min-width:0; }
+pre,.codeblock { overflow-x:auto; overflow-y:auto; scrollbar-width:thin; tab-size:4; }
+.code-wrap { position:relative; }
+.code-wrap .copy-btn { z-index:2; }
+.code-wrap:has(.copy-btn) pre { padding-top:max(3rem,1em); }
+.copy-btn { cursor:pointer; }
+.card ul,.card ol { padding-left:1.5rem; }
+#main-content { scroll-margin-top:5rem; }
+.site-status { min-height:1.5em; }
+@media(max-width:760px) {
+  .site-nav { flex-wrap:wrap; padding:.65rem 1rem; gap:.5rem; }
+  .site-nav .site-menu-toggle { display:inline-flex; align-items:center; gap:.5rem; margin-left:auto; }
+  .site-nav .nav-links { width:100%; flex-direction:column; align-items:stretch; justify-content:flex-start; gap:.15rem; }
+  .js .site-nav .nav-links:not(.is-open) { display:none; }
+  .site-nav .nav-links a { width:100%; min-height:2.75rem; }
+  .hero h1 { font-size:clamp(1.8rem,8vw,2.5rem); }
+  .hero-card { padding:clamp(1rem,4vw,1.6rem); }
+  .container { width:calc(100% - 1.5rem); }
+  .grid { grid-template-columns:minmax(0,1fr); }
+  .pagination,.button-row,.hero-buttons { flex-wrap:wrap; }
+  .hero-buttons .btn,.button-row .btn { flex:1 1 9rem; }
+  .code-wrap .copy-btn { position:relative; top:auto; right:auto; margin-bottom:.4rem; }
+  .code-wrap:has(.copy-btn) pre { padding-top:1rem; }
+  .page { flex-direction:column; }
+  .page .sidebar { width:100%; border-right:0; border-bottom:1px solid rgba(255,255,255,.1); }
+  .page .content { min-width:0; padding:1rem; }
+}
+@media(prefers-reduced-motion:reduce) {
+ html { scroll-behavior:auto; }
+ body::before { animation:none; }
+ *,*::before,*::after { transition-duration:.01ms !important; animation-duration:.01ms !important; }
+}

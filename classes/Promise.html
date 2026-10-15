@@ -5,6 +5,8 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1220">
+<meta name="description" content="SillyDev2026 developer portfolio: Roblox modules, Luau documentation, big-number tools and open-source projects.">
 
 <link rel="stylesheet" href="../style.css">
 
@@ -123,24 +125,23 @@ hr.soft{
 
 </style>
 
+<link rel="stylesheet" href="../site-polish.css">
+<script src="../site.js" defer></script>
 </head>
 
 <body>
 
-<nav>
-<div class="logo">SillyDev2026</div>
-
-<div class="nav-links">
-<a href="../index.html">Home</a>
-<a href="../about.html">About</a>
-<a href="../projects.html">Projects</a>
-<a href="../roblox-classes.html">Classes</a>
-<a href="../links.html">Links</a>
-<a href="../contact.html">Contact</a>
-</div>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<nav class="site-nav" aria-label="Main navigation">
+  <a class="site-logo" href="../index.html">SillyDev<span>2026</span></a>
+  <button class="site-menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Toggle site navigation">☰ <span>Menu</span></button>
+  <div class="nav-links" id="site-nav-links">
+    <a href="../index.html">Home</a><a href="../about.html">About</a><a href="../projects.html">Projects</a>
+    <a href="../roblox.html">Roblox Hub</a><a href="../links.html">Links</a><a href="../contact.html">Contact</a>
+  </div>
 </nav>
 
-<main class="container">
+<main id="main-content" class="container">
 
 <!-- HERO -->
 <section class="hero">
@@ -608,7 +609,7 @@ return Promise
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script>
-hljs.highlightAll();
+if (window.hljs) window.hljs.highlightAll();
 
 function copyCode(){
     const text = document.querySelector(".codeblock").innerText;

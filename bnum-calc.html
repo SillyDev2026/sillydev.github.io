@@ -5,6 +5,8 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1220">
+<meta name="description" content="SillyDev2026 developer portfolio: Roblox modules, Luau documentation, big-number tools and open-source projects.">
 
 <link rel="stylesheet" href="style.css">
 
@@ -66,25 +68,27 @@ input, select{
     font-size:14px;
     word-break:break-word;
 }
-</style>
+label{display:block;text-align:left;margin-top:12px;font-weight:650}.result.error{color:#fda4af}#calcForm .btn{width:100%}</style>
+<link rel="stylesheet" href="site-polish.css">
+<script src="site.js" defer></script>
 </head>
 
 <body>
 
-<nav>
-<div class="logo">SillyDev2026</div>
-
-<div class="nav-links">
-<a href="index.html">Home</a>
-<a href="projects.html">Projects</a>
-<a href="contact.html">Contact</a>
-</div>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<nav class="site-nav" aria-label="Main navigation">
+  <a class="site-logo" href="index.html">SillyDev<span>2026</span></a>
+  <button class="site-menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Toggle site navigation">☰ <span>Menu</span></button>
+  <div class="nav-links" id="site-nav-links">
+    <a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a>
+    <a href="roblox.html">Roblox Hub</a><a href="links.html">Links</a><a href="contact.html">Contact</a>
+  </div>
 </nav>
 
-<main class="container">
+<main id="main-content" class="container">
 
 <section class="hero">
-<div class="card hero-card">
+<form class="card hero-card" id="calcForm">
 
 <span class="badge">Calculator</span>
 
@@ -95,11 +99,11 @@ Big number calculator using your Bnum system.<br>
 Examples: 1e6, 5e12, 999999999
 </p>
 
-<input id="num1" placeholder="First Number">
+<label for="num1">First number</label><input id="num1" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 1e3000">
 
-<input id="num2" placeholder="Second Number">
+<label for="num2">Second number</label><input id="num2" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 2.5e20">
 
-<select id="op">
+<label for="op">Operation</label><select id="op">
 <option value="add">Add (+)</option>
 <option value="sub">Subtract (-)</option>
 <option value="mul">Multiply (×)</option>
@@ -109,243 +113,18 @@ Examples: 1e6, 5e12, 999999999
 </select>
 
 <div style="margin-top:18px;">
-<button class="btn primary" onclick="calculate()">Calculate</button>
+<button class="btn primary" type="submit">Calculate</button>
 </div>
 
-<div class="result" id="result">0</div>
-<div class="subtext" id="raw">Ready</div>
+<div class="result" id="result" role="status" aria-live="polite">0</div>
+<div class="subtext" id="raw" aria-live="polite">Ready</div>
 
-</div>
+</form>
 </section>
-
 </main>
 
-<script>
-class Bnum{
-constructor(man,exp=0){
-this.man=parseFloat(man);
-this.exp=parseInt(exp);
-this.normalize();
-}
-
-normalize(){
-if(this.man===0){
-this.exp=0;
-return this;
-}
-let man=Math.abs(this.man);
-let shift=Math.floor(Math.log10(man));
-this.man=(this.man>0?1:-1)*(man/(10**shift));
-this.exp+=shift;
-return this;
-}
-
-static new(man,exp){
-return new Bnum(man,exp);
-}
-
-static fromNumber(val){
-if(val===0)return new Bnum(0,0);
-let sign=val<0?-1:1;
-val=Math.abs(val);
-let exp=Math.floor(Math.log10(val));
-let man=val/(10**exp);
-return new Bnum(sign*man,exp);
-}
-
-static fromString(val){
-val=String(val).trim().toLowerCase();
-
-if(val==="0"||val==="0e0"){
-return new Bnum(0,0);
-}
-
-if(!val.includes("e")){
-return this.fromNumber(parseFloat(val));
-}
-
-let parts=val.split("e");
-let base=parseFloat(parts[0]);
-let exp=parseInt(parts[1]);
-
-let sign=base<0?-1:1;
-let absBase=Math.abs(base);
-
-let totalExp=Math.log10(absBase)+exp;
-let expFinal=Math.floor(totalExp);
-let man=sign*(absBase/(10**Math.floor(Math.log10(absBase))));
-
-return new Bnum(man,expFinal);
-}
-
-static convert(val){
-if(val instanceof Bnum)return val;
-if(typeof val==="number")return this.fromNumber(val);
-if(typeof val==="string")return this.fromString(val);
-return new Bnum(0,0);
-}
-
-static add(a,b){
-a=this.convert(a);
-b=this.convert(b);
-
-if(a.man===0)return b;
-if(b.man===0)return a;
-
-let man1,man2,exp;
-
-if(a.exp>b.exp){
-let diff=a.exp-b.exp;
-man1=a.man;
-man2=b.man/(10**diff);
-exp=a.exp;
-}else{
-let diff=b.exp-a.exp;
-man1=a.man/(10**diff);
-man2=b.man;
-exp=b.exp;
-}
-
-return new Bnum(man1+man2,exp);
-}
-
-static sub(a,b){
-a=this.convert(a);
-b=this.convert(b);
-return this.add(a,new Bnum(-b.man,b.exp));
-}
-
-static mul(a,b){
-a=this.convert(a);
-b=this.convert(b);
-
-if(a.man===0||b.man===0)return new Bnum(0,0);
-
-return new Bnum(a.man*b.man,a.exp+b.exp);
-}
-
-static recip(v){
-v=this.convert(v);
-return new Bnum(1/v.man,-v.exp);
-}
-
-static div(a,b){
-return this.mul(a,this.recip(b));
-}
-
-static log10(v){
-v=this.convert(v);
-
-if(v.man<=0)return new Bnum(0,0);
-
-let result=Math.log10(v.man)+v.exp;
-
-if(Math.abs(result)<10){
-return new Bnum(result,0);
-}
-
-let shift=Math.floor(Math.log10(Math.abs(result)));
-let man=result/(10**shift);
-
-return new Bnum(man,shift);
-}
-
-static log(a,b){
-return this.div(this.log10(a),this.log10(b));
-}
-
-static pow10(v){
-v=this.convert(v);
-
-if(v.man===0)return new Bnum(1,0);
-
-let realExp=v.man*(10**v.exp);
-let exp=Math.floor(realExp);
-let man=10**(realExp-exp);
-
-return new Bnum(man,exp);
-}
-
-static pow(a,b){
-a=this.convert(a);
-b=this.convert(b);
-
-let loga=this.log10(a);
-let power=this.mul(loga,b);
-
-return this.pow10(power);
-}
-
-static suffix_part(index){
-const first=["","U","D","T","Qd","Qn","Sx","Sp","Oc","No"];
-const second=["","De","Vt","Tg","qg","Qg","sg","Sg","Og","Ng"];
-const third=["","Ce","Du","Tr","Qa","Qi","Se","Si","Ot","Ni"];
-
-let hund=Math.floor(index/100);
-index=index%100;
-let ten=Math.floor(index/10);
-let one=index%10;
-
-return first[one]+second[ten]+third[hund];
-}
-
-static format(v){
-v=this.convert(v);
-
-let man=v.man;
-let exp=v.exp;
-
-if(man===0)return "0";
-
-let sign=man<0?"-":"";
-man=Math.abs(man);
-
-let first=["","k","m","b"];
-
-if(exp<3000){
-let lf=exp%3;
-man=+(man*(10**lf)).toFixed(2);
-let index=Math.floor(exp/3);
-
-if(index<first.length){
-return sign+man+first[index];
-}
-
-return sign+man+this.suffix_part(index-1);
-}
-
-return sign+"E"+this.format(this.fromNumber(exp));
-}
-
-toString(){
-return this.man+"e"+this.exp;
-}
-}
-
-function calculate(){
-try{
-let a=document.getElementById("num1").value||"0";
-let b=document.getElementById("num2").value||"0";
-let op=document.getElementById("op").value;
-
-let result;
-
-if(op==="add")result=Bnum.add(a,b);
-if(op==="sub")result=Bnum.sub(a,b);
-if(op==="mul")result=Bnum.mul(a,b);
-if(op==="div")result=Bnum.div(a,b);
-if(op==="pow")result=Bnum.pow(a,b);
-if(op==="log")result=Bnum.log(a,b);
-
-document.getElementById("result").innerText=Bnum.format(result);
-document.getElementById("raw").innerText=result.toString();
-
-}catch(err){
-document.getElementById("result").innerText="Error";
-document.getElementById("raw").innerText=err.message;
-}
-}
-</script>
+<script src="bnum.js"></script>
+<script src="calculator.js"></script>
 
 </body>
 </html>

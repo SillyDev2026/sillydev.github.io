@@ -5,6 +5,8 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1220">
+<meta name="description" content="SillyDev2026 developer portfolio: Roblox modules, Luau documentation, big-number tools and open-source projects.">
 
 <link rel="stylesheet" href="style.css">
 
@@ -89,26 +91,25 @@ footer {
     margin-top: 28px;
 }
 
-</style>
+#hubError{color:#fda4af}.settings input{width:min(100%,25rem)}.pagination button{flex-shrink:0}</style>
 
+<link rel="stylesheet" href="site-polish.css">
+<script src="site.js" defer></script>
 </head>
 
 <body>
 
-<nav>
-    <div class="logo">SillyDev2026</div>
-
-    <div>
-        <a href="./index.html">Home</a>
-        <a href="./about.html">About</a>
-        <a href="./projects.html">Projects</a>
-        <a href="./roblox.html">Roblox Hub</a>
-        <a href="./links.html">Links</a>
-        <a href="./contact.html">Contact</a>
-    </div>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<nav class="site-nav" aria-label="Main navigation">
+  <a class="site-logo" href="index.html">SillyDev<span>2026</span></a>
+  <button class="site-menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Toggle site navigation">☰ <span>Menu</span></button>
+  <div class="nav-links" id="site-nav-links">
+    <a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a>
+    <a href="roblox.html">Roblox Hub</a><a href="links.html">Links</a><a href="contact.html">Contact</a>
+  </div>
 </nav>
 
-<div class="container">
+<div id="main-content" class="container">
 
     <h1>🎮 Roblox Hub</h1>
     <p>Select category and browse SillyDev2026 creations</p>
@@ -117,26 +118,27 @@ footer {
     <div class="card settings">
 
         <div>
-            <label>Category</label><br>
+            <label for="categorySelect">Category</label><br>
             <select id="categorySelect">
                 <option value="games">Games</option>
-                <option value="modules">Modules</option>
+                <option value="modules" selected>Modules</option>
             </select>
         </div>
 
         <div>
-            <label>Items per page (5 - 25)</label><br>
+            <label for="limitInput">Items per page (5 - 25)</label><br>
             <input id="limitInput" type="number" value="6" min="5" max="25">
         </div>
 
+        <div><label for="hubSearch">Search</label><br><input id="hubSearch" type="search" placeholder="Find a module or tool" autocomplete="off"></div>
         <div class="button-row">
             <button class="btn primary" id="applyBtn">Apply</button>
         </div>
-
+        <p id="hubError" role="alert" class="site-status"></p>
     </div>
 
     <!-- GRID -->
-    <div id="grid" class="grid"></div>
+    <section id="grid" class="grid" aria-live="polite"></section>
 
     <!-- PAGINATION -->
     <div class="pagination">
@@ -149,87 +151,7 @@ footer {
 
 <footer>© 2026 SillyDev2026</footer>
 
-<script>
-const data = {
-    games: [
-        { title: "Game Example 1", desc: "A Roblox game", link: "#" },
-        { title: "Game Example 2", desc: "Another Roblox game", link: "#" }
-    ],
-    modules: [
-        { title: "Bnum", desc: "BnumModule", link: "https://create.roblox.com/store/asset/133072011264214/Bnum" },
-        { title: "NetStream", desc: "Network handler system", link: "https://create.roblox.com/store/asset/110479081610454/NetworkHandler" },
-        { title: "Bench Lua Code", desc: "Code for benchmarking Lua performance", link: "tools/bench.html" }
-    ]
-};
-
-let page = 1;
-let limit = 6;
-let category = "games";
-
-function getItems() {
-    return data[category] || [];
-}
-
-function getMaxPage(items) {
-    return Math.max(1, Math.ceil(items.length / limit));
-}
-
-function render() {
-    const grid = document.getElementById("grid");
-    const pageInfo = document.getElementById("pageInfo");
-
-    const items = getItems();
-    const max = getMaxPage(items);
-
-    if (page > max) page = max;
-
-    const slice = items.slice((page - 1) * limit, page * limit);
-
-    grid.innerHTML = "";
-
-    slice.forEach(item => {
-        grid.innerHTML += `
-        <div class="card">
-            <h3>${item.title}</h3>
-            <p>${item.desc}</p>
-            <a class="btn primary" href="${item.link}" target="_blank">Open</a>
-        </div>`;
-    });
-
-    pageInfo.innerText = `Page ${page} / ${max}`;
-}
-
-document.getElementById("categorySelect").onchange = () => {
-    category = event.target.value;
-    page = 1;
-    render();
-};
-
-document.getElementById("applyBtn").onclick = () => {
-    const v = parseInt(document.getElementById("limitInput").value);
-    if (v >= 5 && v <= 25) {
-        limit = v;
-        page = 1;
-        render();
-    }
-};
-
-document.getElementById("nextBtn").onclick = () => {
-    if (page < getMaxPage(getItems())) {
-        page++;
-        render();
-    }
-};
-
-document.getElementById("backBtn").onclick = () => {
-    if (page > 1) {
-        page--;
-        render();
-    }
-};
-
-render();
-</script>
+<script src="roblox-hub.js"></script>
 
 </body>
 </html>

@@ -5,6 +5,8 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1220">
+<meta name="description" content="SillyDev2026 developer portfolio: Roblox modules, Luau documentation, big-number tools and open-source projects.">
 
 <link rel="stylesheet" href="style.css">
 
@@ -113,23 +115,23 @@ footer {
 }
 </style>
 
+<link rel="stylesheet" href="site-polish.css">
+<script src="site.js" defer></script>
 </head>
 
 <body>
 
-<nav>
-    <div class="logo">SillyDev2026</div>
-
-    <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="projects.html">Projects</a>
-        <a href="links.html">Links</a>
-        <a href="contact.html">Contact</a>
-    </div>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<nav class="site-nav" aria-label="Main navigation">
+  <a class="site-logo" href="index.html">SillyDev<span>2026</span></a>
+  <button class="site-menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Toggle site navigation">☰ <span>Menu</span></button>
+  <div class="nav-links" id="site-nav-links">
+    <a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a>
+    <a href="roblox.html">Roblox Hub</a><a href="links.html">Links</a><a href="contact.html">Contact</a>
+  </div>
 </nav>
 
-<main class="container">
+<main id="main-content" class="container">
 
     <!-- HERO -->
     <section class="hero">
@@ -231,7 +233,7 @@ footer {
             <p>Structured data flow system for clean processing chains.</p>
 
             <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
-                <a class="btn primary" href="#pipeline">Open</a>
+                <a class="btn primary" href="docs/pipeline.html">Open</a>
                 <a class="btn dark" href="docs/pipeline.html">Docs</a>
             </div>
         </div>
@@ -292,4 +294,4 @@ footer {
 </footer>
 
 </body>
-</html>s
+</html>
