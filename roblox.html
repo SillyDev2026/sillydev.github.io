@@ -5,6 +5,8 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1220">
+<meta name="description" content="SillyDev2026 developer portfolio: Roblox modules, Luau documentation, big-number tools and open-source projects.">
 
 <link rel="stylesheet" href="style.css">
 
@@ -91,24 +93,23 @@ footer {
 
 </style>
 
+<link rel="stylesheet" href="site-polish.css">
+<script src="site.js" defer></script>
 </head>
 
 <body>
 
-<nav>
-    <div class="logo">SillyDev2026</div>
-
-    <div>
-        <a href="./index.html">Home</a>
-        <a href="./about.html">About</a>
-        <a href="./projects.html">Projects</a>
-        <a href="./roblox.html">Roblox Hub</a>
-        <a href="./links.html">Links</a>
-        <a href="./contact.html">Contact</a>
-    </div>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<nav class="site-nav" aria-label="Main navigation">
+  <a class="site-logo" href="index.html">SillyDev<span>2026</span></a>
+  <button class="site-menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Toggle site navigation">☰ <span>Menu</span></button>
+  <div class="nav-links" id="site-nav-links">
+    <a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a>
+    <a href="roblox.html">Roblox Hub</a><a href="links.html">Links</a><a href="contact.html">Contact</a>
+  </div>
 </nav>
 
-<div class="container">
+<div id="main-content" class="container">
 
     <h1>🎮 Roblox Hub</h1>
     <p>Select category and browse SillyDev2026 creations</p>
@@ -192,7 +193,7 @@ function render() {
         <div class="card">
             <h3>${item.title}</h3>
             <p>${item.desc}</p>
-            <a class="btn primary" href="${item.link}" target="_blank">Open</a>
+            <a class="btn primary" href="${item.link}" target="_blank" rel="noopener noreferrer">Open</a>
         </div>`;
     });
 
