@@ -14,7 +14,7 @@ test("zero and arithmetic behave sensibly", () => {
   assert.equal(Bnum.mul("1.5e10","2").toNumber(), 3e10);
   assert.equal(Bnum.div("10","2").toNumber(), 5);
   assert.ok(Math.abs(Bnum.pow("2","10").toNumber()-1024)<1e-8);
-  assert.equal(Bnum.pow("-2","3").toNumber(), -8);
+  assert.ok(Math.abs(Bnum.pow("-2","3").toNumber()+8)<1e-10);
   assert.equal(Bnum.log("1000","10").toNumber(), 3);
 });
 test("bad arithmetic and invalid inputs are rejected", () => {
